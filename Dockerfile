@@ -5,7 +5,7 @@ WORKDIR /app
 # Copiar todo el código fuente al contenedor
 COPY . .
 
-# Compilar el proyecto directamente con maven global
+# Compilar el proyecto directamente con maven
 RUN mvn clean package -DskipTests
 
 # Etapa 2: Ejecutar la aplicación ligera
