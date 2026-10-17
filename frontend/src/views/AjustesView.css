@@ -1,0 +1,111 @@
+.ajustes-layout {
+    padding: 1.5rem;
+    background-color: #f4f7f6;
+    height: calc(100vh - 80px);
+    overflow-y: auto;
+}
+
+.ajustes-header {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    margin-bottom: 1.5rem;
+}
+
+.ajustes-header h2 {
+    font-size: 1.3rem;
+    margin-bottom: 0.2rem;
+    color: #1e293b;
+}
+
+.ajustes-header p {
+    font-size: 0.9rem;
+    color: #64748b;
+}
+
+.ajustes-grid-form {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+    gap: 1.5rem;
+}
+
+.card-ajustes {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+}
+
+.card-ajustes h3 {
+    font-size: 1.1rem;
+    color: #0f172a;
+    margin-bottom: 0.2rem;
+}
+
+.card-desc {
+    font-size: 0.8rem;
+    color: #64748b;
+    margin-bottom: 1.2rem;
+}
+
+.card-ajustes label {
+    font-size: 0.85rem;
+    color: #334155;
+    display: block;
+    margin-top: 0.8rem;
+    font-weight: 500;
+}
+
+.card-ajustes input[type="text"],
+.card-ajustes input[type="number"],
+.card-ajustes input[type="time"],
+.card-ajustes select {
+    width: 100%;
+    padding: 0.6rem;
+    margin-top: 0.3rem;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    background-color: #f8fafc;
+}
+
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-top: 0.8rem;
+}
+
+.checkbox-group input {
+    width: auto;
+    margin: 0;
+}
+
+.checkbox-group label {
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+.ajustes-footer-actions {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 1rem;
+}
+
+.btn-guardar-cambios {
+    background: #16a34a;
+    color: white;
+    border: none;
+    padding: 0.8rem 2rem;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: background 0.2s;
+}
+
+.btn-guardar-cambios:hover {
+    background: #15803d;
+}

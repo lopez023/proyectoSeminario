@@ -1,0 +1,317 @@
+.docente-layout {
+    display: flex;
+    height: 100vh;
+    background-color: #f4f6f9;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Sidebar */
+.docente-sidebar {
+    width: 260px;
+    background-color: #1e3a8a;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 1.5rem 1rem;
+    box-sizing: border-box;
+}
+
+.sidebar-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 2rem;
+    padding-left: 0.5rem;
+}
+
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    flex: 1;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: transparent;
+    border: none;
+    color: #93c5fd;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    text-align: left;
+    transition: all 0.2s;
+}
+
+.nav-item:hover, .nav-item.active {
+    background-color: #3b82f6;
+    color: white;
+}
+
+/* Sidebar Footer & Clickable Profile */
+.sidebar-footer {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 1rem;
+    position: relative; /* <--- Clave para posicionar la tarjeta flotante */
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.5rem;
+}
+
+.user-info-clickable {
+    cursor: pointer;
+    padding: 0.6rem;
+    border-radius: 10px;
+    transition: background-color 0.2s, border-color 0.2s;
+    border: 1px solid transparent;
+    user-select: none;
+}
+
+.user-info-clickable:hover, .user-info-clickable.active {
+    background-color: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.25);
+}
+
+.user-avatar {
+    font-size: 1.8rem;
+    background: #3b82f6;
+    padding: 0.2rem 0.5rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.user-name {
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin: 0;
+    color: #ffffff;
+}
+
+.user-role {
+    font-size: 0.8rem;
+    color: #93c5fd;
+    margin: 0;
+}
+
+.btn-logout {
+    width: 100%;
+    background: transparent;
+    border: none;
+    color: #f87171;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 0.9rem;
+}
+
+.btn-logout:hover {
+    background-color: rgba(239, 68, 68, 0.1);
+}
+
+/* Tarjeta Flotante (Popover de Información) */
+.profile-popover {
+    position: absolute;
+    bottom: 95px;
+    left: 0;
+    width: 250px;
+    background-color: #ffffff;
+    color: #1e293b;
+    border-radius: 12px;
+    padding: 1rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+    border: 1px solid #e2e8f0;
+    z-index: 999;
+    animation: fadeInPopover 0.2s ease-out;
+}
+
+.popover-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: #1e3a8a;
+    border-bottom: 1px solid #f1f5f9;
+    padding-bottom: 0.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.popover-close {
+    background: transparent;
+    border: none;
+    font-size: 1rem;
+    color: #94a3b8;
+    cursor: pointer;
+    padding: 0 4px;
+}
+
+.popover-close:hover {
+    color: #0f172a;
+}
+
+.popover-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+.popover-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.popover-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: #64748b;
+    text-transform: uppercase;
+}
+
+.popover-val {
+    font-size: 0.85rem;
+    color: #0f172a;
+    word-break: break-word;
+}
+
+.popover-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+    background-color: #f8fafc;
+    padding: 0.5rem;
+    border-radius: 8px;
+    margin-top: 0.25rem;
+}
+
+.popover-highlight {
+    font-size: 0.8rem;
+    color: #2563eb;
+    display: block;
+}
+
+@keyframes fadeInPopover {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Main Content */
+.docente-main {
+    flex: 1;
+    padding: 2rem;
+    overflow-y: auto;
+}
+
+.welcome-banner {
+    background: white;
+    border-radius: 16px;
+    padding: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    margin-bottom: 2rem;
+    border: 1px solid #e5e7eb;
+}
+
+.welcome-text h1 {
+    color: #1f2937;
+    margin: 0 0 0.5rem 0;
+    font-size: 1.8rem;
+}
+
+.welcome-text p {
+    color: #6b7280;
+    margin: 0;
+}
+
+.welcome-emoji {
+    font-size: 3rem;
+}
+
+.section-title {
+    font-size: 1.25rem;
+    color: #1f2937;
+    margin-bottom: 1rem;
+}
+
+/* Quick Access Cards */
+.quick-access-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+}
+
+.quick-card {
+    background: white;
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    border: 1px solid #e5e7eb;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.card-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+}
+
+.card-icon.blue { background-color: #eff6ff; color: #3b82f6; }
+.card-icon.purple { background-color: #f3e8ff; color: #9333ea; }
+.card-icon.green { background-color: #f0fdf4; color: #16a34a; }
+
+.quick-card h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    color: #1f2937;
+}
+
+.quick-card p {
+    margin: 0;
+    color: #6b7280;
+    font-size: 0.9rem;
+    flex: 1;
+}
+
+.btn-card {
+    border: none;
+    color: white;
+    padding: 0.6rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    margin-top: 0.5rem;
+    transition: opacity 0.2s;
+}
+
+.btn-card:hover { opacity: 0.9; }
+.blue-bg { background-color: #2563eb; }
+.purple-bg { background-color: #7c3aed; }
+.green-bg { background-color: #16a34a; }

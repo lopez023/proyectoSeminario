@@ -1,0 +1,100 @@
+.btn-pdf-tabla {
+    background: #dc2626;
+    color: white;
+    border: none;
+    padding: 0.35rem 0.7rem;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-pdf-tabla:hover {
+    background: #b91c1c;
+}
+
+.justificaciones-layout {
+    padding: 1.5rem;
+    background-color: #f4f7f6;
+    height: calc(100vh - 80px);
+    overflow-y: auto;
+}
+
+.justificaciones-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    background: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.justificaciones-header h2 {
+    font-size: 1.3rem;
+    margin-bottom: 0.2rem;
+    color: #1e293b;
+}
+
+.justificaciones-header p {
+    font-size: 0.9rem;
+    color: #64748b;
+}
+
+.btn-nueva-justificacion {
+    background: #1d4ed8;
+    color: white;
+    border: none;
+    padding: 0.7rem 1.2rem;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-nueva-justificacion:hover {
+    background: #1e40af;
+}
+
+.justificaciones-card {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    overflow-x: auto;
+}
+
+.justificaciones-card h3 {
+    font-size: 1.1rem;
+    color: #1e293b;
+    margin-bottom: 1rem;
+}
+
+.badge-grado-sec {
+    background: #e0f2fe;
+    color: #0369a1;
+    padding: 0.2rem 0.6rem;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.fecha-badge {
+    font-size: 0.85rem;
+    color: #475569;
+    font-weight: 500;
+}
+
+.modal-content textarea {
+    width: 100%;
+    padding: 0.6rem;
+    margin-top: 0.3rem;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font-family: inherit;
+    resize: vertical;
+}

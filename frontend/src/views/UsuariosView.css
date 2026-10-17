@@ -1,0 +1,81 @@
+.usuarios-layout {
+    padding: 1.5rem;
+    background-color: #f4f7f6;
+    height: calc(100vh - 80px);
+    overflow-y: auto;
+}
+
+.usuarios-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    background: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.usuarios-header h2 {
+    font-size: 1.3rem;
+    margin-bottom: 0.2rem;
+    color: #1e293b;
+}
+
+.usuarios-header p {
+    font-size: 0.9rem;
+    color: #64748b;
+}
+
+.btn-nuevo-usuario {
+    background: #1d4ed8;
+    color: white;
+    border: none;
+    padding: 0.7rem 1.2rem;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-nuevo-usuario:hover {
+    background: #1e40af;
+}
+
+.usuarios-card {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    overflow-x: auto;
+}
+
+.usuarios-card h3 {
+    font-size: 1.1rem;
+    color: #1e293b;
+    margin-bottom: 1rem;
+}
+
+.role-badge {
+    background: #e2e8f0;
+    color: #334155;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-right: 0.3rem;
+}
+
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.checkbox-container input {
+    width: auto;
+    margin: 0;
+}

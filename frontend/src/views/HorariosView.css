@@ -1,0 +1,119 @@
+.horarios-layout {
+    padding: 1.5rem;
+    background-color: #f4f7f6;
+    height: calc(100vh - 80px);
+    overflow-y: auto;
+}
+
+.horarios-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    background: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.horarios-header h2 {
+    font-size: 1.3rem;
+    margin-bottom: 0.2rem;
+    color: #1e293b;
+}
+
+.horarios-header p {
+    font-size: 0.9rem;
+    color: #64748b;
+}
+
+.selector-grado-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.selector-grado-container label {
+    font-size: 0.75rem;
+    color: #64748b;
+    font-weight: 600;
+}
+
+.select-grado {
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    border: 1px solid #cbd5e1;
+    background-color: #f8fafc;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #0f172a;
+    cursor: pointer;
+}
+
+.horarios-card {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+}
+
+.horarios-table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.2rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.horarios-table-header h3 {
+    font-size: 1.1rem;
+    color: #1e293b;
+}
+
+.badge-seccion-activa {
+    background: #e0f2fe;
+    color: #0369a1;
+    padding: 0.3rem 0.8rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.horarios-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 700px;
+}
+
+.horarios-table th, .horarios-table td {
+    padding: 0.9rem;
+    text-align: center;
+    border: 1px solid #f1f5f9;
+    font-size: 0.9rem;
+}
+
+.horarios-table th {
+    background-color: #f8fafc;
+    color: #475569;
+    font-weight: 600;
+}
+
+.hora-columna {
+    background-color: #f8fafc;
+    color: #334155;
+    width: 180px;
+}
+
+.fila-recreo {
+    background-color: #fefce8;
+    font-weight: 600;
+    color: #854d0e;
+}

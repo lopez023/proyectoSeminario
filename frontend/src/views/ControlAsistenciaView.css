@@ -1,0 +1,111 @@
+.asistencia-layout {
+    padding: 1.5rem;
+    background-color: #f4f7f6;
+    height: calc(100vh - 80px);
+    overflow-y: auto;
+}
+
+.asistencia-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    background: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.asistencia-header h2 {
+    font-size: 1.3rem;
+    margin-bottom: 0.2rem;
+    color: #1e293b;
+}
+
+.asistencia-header p {
+    font-size: 0.9rem;
+    color: #64748b;
+}
+
+.filtros-container {
+    display: flex;
+    gap: 1rem;
+    background: white;
+    padding: 1.2rem 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.filtro-grupo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.filtro-grupo label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #64748b;
+}
+
+.filtro-grupo select {
+    padding: 0.5rem 0.8rem;
+    border-radius: 8px;
+    border: 1px solid #cbd5e1;
+    background-color: #f8fafc;
+    font-size: 0.9rem;
+    color: #0f172a;
+    cursor: pointer;
+}
+
+.asistencia-card {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    overflow-x: auto;
+}
+
+.asistencia-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.2rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.asistencia-card-header h3 {
+    font-size: 1.1rem;
+    color: #1e293b;
+}
+
+.btn-exportar-asistencia-pdf {
+    background: #dc2626;
+    color: white;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+    font-size: 0.9rem;
+}
+
+.btn-exportar-asistencia-pdf:hover {
+    background: #b91c1c;
+}
+
+.status.late {
+    background: #fef3c7;
+    color: #d97706;
+    padding: 0.2rem 0.6rem;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}

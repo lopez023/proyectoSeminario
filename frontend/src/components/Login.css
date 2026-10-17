@@ -1,0 +1,159 @@
+/* Fondo completo con combinación geométrica elegante */
+.login-page {
+    min-height: 100vh;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #2b4c6f 0%, #1a324b 40%, #e05627 100%);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding: 1.5rem;
+    box-sizing: border-box;
+}
+
+/* Tarjeta principal blanca */
+.login-card-modern {
+    background: #ffffff;
+    width: 100%;
+    max-width: 380px;
+    border-radius: 16px;
+    padding: 2.5rem 2rem;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    position: relative;
+    animation: fadeIn 0.3s ease-out;
+}
+
+/* Header y avatar superior */
+.avatar-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.avatar-circle {
+    width: 70px;
+    height: 70px;
+    background-color: #1a324b;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: -55px auto 0.75rem auto;
+    border: 4px solid #ffffff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    font-size: 2rem;
+    color: #ffffff;
+}
+
+.title-text {
+    margin: 0;
+    font-size: 1.5rem;
+    color: #1a324b;
+    font-weight: 600;
+}
+
+/* Mensaje de error */
+.login-error-msg {
+    background-color: #fff5f5;
+    border-left: 4px solid #e53e3e;
+    color: #c53030;
+    padding: 0.6rem 0.8rem;
+    border-radius: 6px;
+    font-size: 0.82rem;
+    margin-bottom: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Formularios y campos con línea inferior */
+.modern-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.input-group-line {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    border-bottom: 1.5px solid #e2e8f0;
+    padding-bottom: 0.5rem;
+    transition: border-color 0.2s;
+}
+
+.input-group-line:focus-within {
+    border-bottom-color: #e05627;
+}
+
+.field-icon {
+    font-size: 1.1rem;
+    color: #a0aec0;
+}
+
+/* TEXTO DE ENTRADA TOTALMENTE LEGIBLE */
+.input-group-line input {
+    width: 100%;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 0.95rem;
+    color: #1a202c !important; /* <--- Color de letra oscuro, perfectamente legible */
+    font-weight: 500;
+}
+
+.input-group-line input::placeholder {
+    color: #a0aec0;
+    font-weight: normal;
+}
+
+/* Enlace Olvidaste tu contraseña */
+.forgot-wrapper {
+    text-align: right;
+    margin-top: -0.5rem;
+}
+
+.forgot-link {
+    font-size: 0.8rem;
+    color: #718096;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.forgot-link:hover {
+    color: #e05627;
+    text-decoration: underline;
+}
+
+/* Botón de Iniciar Sesión Naranja/Rojo */
+.btn-signin {
+    margin-top: 0.5rem;
+    padding: 0.8rem;
+    background-color: #e05627;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+    box-shadow: 0 4px 12px rgba(224, 86, 39, 0.3);
+}
+
+.btn-signin:hover:not(:disabled) {
+    background-color: #cc4518;
+}
+
+.btn-signin:active:not(:disabled) {
+    transform: scale(0.98);
+}
+
+.btn-signin:disabled {
+    background-color: #cbd5e0;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}

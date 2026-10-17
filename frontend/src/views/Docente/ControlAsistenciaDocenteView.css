@@ -1,0 +1,716 @@
+
+/* ========================================
+   CONTROL DE ASISTENCIA
+   Diseño limpio, alineado y adaptable
+======================================== */
+
+.asistencia-page {
+    --text: #1e293b;
+    --muted: #64748b;
+    --border: #e2e8f0;
+    --surface: #ffffff;
+    --background: #f5f7fb;
+    --primary: #3156c9;
+
+    width: 100%;
+    min-height: 100vh;
+    padding: 28px;
+    background: var(--background);
+    color: var(--text);
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    box-sizing: border-box;
+}
+
+.asistencia-page *,
+.asistencia-page *::before,
+.asistencia-page *::after {
+    box-sizing: border-box;
+}
+
+.asistencia-page button,
+.asistencia-page input,
+.asistencia-page select {
+    font-family: inherit;
+}
+
+.asistencia-page h1,
+.asistencia-page h2,
+.asistencia-page p {
+    margin-top: 0;
+    text-shadow: none;
+    filter: none;
+    opacity: 1;
+}
+
+/* ENCABEZADO */
+
+.asistencia-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 28px;
+}
+
+.asistencia-heading {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    min-width: 0;
+}
+
+.asistencia-back {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: #fff;
+    color: var(--text);
+    font-size: 24px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.asistencia-back:hover {
+    background: #eef2ff;
+}
+
+.asistencia-heading-text {
+    min-width: 0;
+}
+
+.asistencia-page .asistencia-heading h1 {
+    margin: 0;
+    color: #172033;
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1.3;
+    letter-spacing: -0.6px;
+}
+
+.asistencia-page .asistencia-heading p {
+    margin: 6px 0 0;
+    color: #64748b;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.asistencia-date {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    flex-shrink: 0;
+    padding: 10px 13px;
+    border: 1px solid var(--border);
+    border-radius: 11px;
+    background: #fff;
+}
+
+.asistencia-date span,
+.filter-field > span {
+    color: #64748b;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+}
+
+.asistencia-date input {
+    max-width: 175px;
+    padding: 0;
+    border: 0;
+    outline: none;
+    background: transparent;
+    color: #1e293b;
+    font-size: 13px;
+}
+
+/* RESUMEN */
+
+.asistencia-summary {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.summary-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    min-width: 0;
+    min-height: 104px;
+    padding: 19px;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: #fff;
+    box-shadow: 0 2px 5px rgba(15, 23, 42, 0.025);
+}
+
+.summary-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.icon-total {
+    color: #3156c9;
+    background: #e9efff;
+}
+
+.icon-present {
+    color: #167443;
+    background: #dcfce7;
+}
+
+.icon-absent {
+    color: #b42332;
+    background: #fee2e2;
+}
+
+.icon-late {
+    color: #925b08;
+    background: #fef3c7;
+}
+
+.summary-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+}
+
+.summary-info span {
+    color: #64748b;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.4;
+}
+
+.summary-info strong {
+    color: #172033;
+    font-size: 27px;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+/* PANEL PRINCIPAL */
+
+.asistencia-panel {
+    width: 100%;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    background: #fff;
+    box-shadow: 0 3px 12px rgba(15, 23, 42, 0.025);
+}
+
+/* FILTROS */
+
+.asistencia-filters {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 20px 22px;
+    border-bottom: 1px solid var(--border);
+}
+
+.filters-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+}
+
+.filter-field {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 175px;
+    min-width: 0;
+    padding: 9px 12px;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    background: #fff;
+}
+
+.filter-field select {
+    width: 100%;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    color: #1e293b;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.asistencia-save {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    flex-shrink: 0;
+    min-height: 43px;
+    padding: 0 18px;
+    border: 0;
+    border-radius: 9px;
+    background: #16834a;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.asistencia-save:hover {
+    background: #116b3c;
+}
+
+.asistencia-save span {
+    font-size: 17px;
+}
+
+/* TÍTULO Y BUSCADOR */
+
+.asistencia-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 23px 22px;
+}
+
+.toolbar-heading {
+    min-width: 0;
+}
+
+.asistencia-page .toolbar-heading h2 {
+    margin: 0;
+    color: #172033;
+    font-size: 19px;
+    font-weight: 700;
+    line-height: 1.4;
+    letter-spacing: -0.25px;
+}
+
+.asistencia-page .toolbar-heading p {
+    margin: 5px 0 0;
+    color: #64748b;
+    font-size: 12px;
+}
+
+.asistencia-search {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 300px;
+    max-width: 100%;
+    min-height: 42px;
+    padding: 0 12px;
+    border: 1px solid #dfe5ef;
+    border-radius: 9px;
+    background: #fff;
+    color: #64748b;
+}
+
+.asistencia-search:focus-within {
+    border-color: #3156c9;
+    box-shadow: 0 0 0 3px rgba(49, 86, 201, 0.09);
+}
+
+.asistencia-search > span {
+    font-size: 22px;
+    line-height: 1;
+}
+
+.asistencia-search input {
+    width: 100%;
+    min-width: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    color: #1e293b;
+    font-size: 13px;
+}
+
+.asistencia-search input::placeholder {
+    color: #94a3b8;
+}
+
+/* TABLA */
+
+.asistencia-table-scroll {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.asistencia-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    text-align: left;
+}
+
+.asistencia-table .col-number {
+    width: 65px;
+}
+
+.asistencia-table .col-id {
+    width: 78px;
+}
+
+.asistencia-table .col-student {
+    width: 23%;
+}
+
+.asistencia-table .col-status {
+    width: 155px;
+}
+
+.asistencia-table .col-time {
+    width: 105px;
+}
+
+.asistencia-table .col-observation {
+    width: auto;
+}
+
+.asistencia-table thead {
+    background: #f1f5f9;
+}
+
+.asistencia-table th {
+    padding: 14px 12px;
+    border-top: 1px solid #e2e8f0;
+    border-bottom: 1px solid #dbe3ed;
+    color: #334155;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1.5;
+    letter-spacing: 0.35px;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.asistencia-table th:first-child,
+.asistencia-table td:first-child {
+    padding-left: 22px;
+}
+
+.asistencia-table td {
+    height: 69px;
+    padding: 12px;
+    border-bottom: 1px solid #edf1f6;
+    color: #334155;
+    font-size: 13px;
+    vertical-align: middle;
+}
+
+.asistencia-table tbody tr:last-child td {
+    border-bottom: 0;
+}
+
+.asistencia-table tbody tr {
+    transition: background 0.15s;
+}
+
+.asistencia-table tbody tr:hover {
+    background: #f8faff;
+}
+
+.number-cell {
+    color: #94a3b8 !important;
+    font-size: 12px !important;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+}
+
+/* ID */
+
+.student-id {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 37px;
+    height: 37px;
+    border: 1px solid #d7e2ff;
+    border-radius: 10px;
+    background: #edf2ff;
+    color: #294bb5;
+    font-size: 12px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+}
+
+.asistencia-table .student-name {
+    overflow-wrap: anywhere;
+    color: #1e293b;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+/* ESTADOS */
+
+.status-control {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    width: 122px;
+    max-width: 100%;
+    padding: 8px 9px;
+    border-radius: 8px;
+}
+
+.status-control select {
+    width: 100%;
+    min-width: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.status-dot {
+    width: 7px;
+    height: 7px;
+    flex-shrink: 0;
+    border-radius: 50%;
+}
+
+.status-presente {
+    background: #dcfce7;
+}
+
+.status-presente,
+.status-presente select {
+    color: #166534;
+}
+
+.status-presente .status-dot {
+    background: #16a34a;
+}
+
+.status-ausente {
+    background: #fee2e2;
+}
+
+.status-ausente,
+.status-ausente select {
+    color: #991b1b;
+}
+
+.status-ausente .status-dot {
+    background: #dc2626;
+}
+
+.status-tarde {
+    background: #fef3c7;
+}
+
+.status-tarde,
+.status-tarde select {
+    color: #92400e;
+}
+
+.status-tarde .status-dot {
+    background: #d97706;
+}
+
+/* HORA Y OBSERVACIONES */
+
+.student-time {
+    color: #475569 !important;
+    font-size: 12px !important;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+}
+
+.observation-input {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    padding: 8px;
+    border: 1px solid transparent;
+    border-radius: 7px;
+    outline: 0;
+    background: transparent;
+    color: #475569;
+    font-size: 12px;
+}
+
+.observation-input:hover {
+    border-color: #e2e8f0;
+    background: #fff;
+}
+
+.observation-input:focus {
+    border-color: #3156c9;
+    background: #fff;
+    box-shadow: 0 0 0 2px rgba(49, 86, 201, 0.08);
+}
+
+.observation-input::placeholder {
+    color: #94a3b8;
+}
+
+.no-results {
+    height: 100px !important;
+    color: #64748b !important;
+    text-align: center;
+}
+
+/* PIE DE TABLA */
+
+.asistencia-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    min-height: 48px;
+    padding: 12px 22px;
+    border-top: 1px solid var(--border);
+    background: #fafbfe;
+    color: #64748b;
+    font-size: 11px;
+}
+
+/* TABLET */
+
+@media (max-width: 1100px) {
+    .asistencia-page {
+        padding: 22px;
+    }
+
+    .asistencia-summary {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .asistencia-table {
+        min-width: 850px;
+        table-layout: auto;
+    }
+}
+
+/* MÓVIL */
+
+@media (max-width: 600px) {
+    .asistencia-page {
+        padding: 14px;
+    }
+
+    .asistencia-header {
+        align-items: stretch;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .asistencia-page .asistencia-heading h1 {
+        font-size: 22px;
+        letter-spacing: -0.3px;
+    }
+
+    .asistencia-heading {
+        gap: 11px;
+    }
+
+    .asistencia-date {
+        width: 100%;
+    }
+
+    .asistencia-date input {
+        max-width: 100%;
+    }
+
+    .asistencia-summary {
+        gap: 10px;
+        margin-bottom: 16px;
+    }
+
+    .summary-card {
+        min-height: 84px;
+        gap: 10px;
+        padding: 12px;
+    }
+
+    .summary-icon {
+        width: 34px;
+        height: 34px;
+        border-radius: 9px;
+        font-size: 18px;
+    }
+
+    .summary-info span {
+        font-size: 11px;
+    }
+
+    .summary-info strong {
+        font-size: 23px;
+    }
+
+    .asistencia-filters {
+        align-items: stretch;
+        flex-direction: column;
+        padding: 15px;
+        gap: 14px;
+    }
+
+    .filters-left {
+        align-items: stretch;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .filter-field {
+        width: 100%;
+    }
+
+    .asistencia-save {
+        width: 100%;
+    }
+
+    .asistencia-toolbar {
+        align-items: stretch;
+        flex-direction: column;
+        padding: 18px 15px;
+        gap: 14px;
+    }
+
+    .asistencia-page .toolbar-heading h2 {
+        font-size: 18px;
+    }
+
+    .asistencia-search {
+        width: 100%;
+    }
+
+    .asistencia-table {
+        min-width: 790px;
+    }
+
+    .asistencia-footer {
+        align-items: flex-start;
+        flex-direction: column;
+        justify-content: center;
+        gap: 4px;
+        padding: 12px 15px;
+    }
+}

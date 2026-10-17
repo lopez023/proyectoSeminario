@@ -1,0 +1,287 @@
+.alumnos-layout {
+    display: grid;
+    grid-template-columns: 260px 1fr 320px;
+    gap: 1.5rem;
+    height: calc(100vh - 80px);
+    padding: 1.5rem;
+    background-color: #f4f7f6;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    box-sizing: border-box;
+}
+
+.alumnos-sidebar-filtro,
+.alumnos-contenido-central,
+.alumnos-panel-derecho {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e2e8f0;
+    overflow-y: auto;
+}
+
+/* Sidebar Filtros */
+.alumnos-sidebar-filtro h3,
+.alumnos-panel-derecho h3 {
+    font-size: 1.1rem;
+    margin: 0 0 0.25rem 0;
+    color: #0f172a;
+}
+
+.sub-text {
+    font-size: 0.8rem;
+    color: #64748b;
+    margin-bottom: 1rem;
+}
+
+.panel-desc {
+    font-size: 0.8rem;
+    color: #64748b;
+    margin-bottom: 1rem;
+}
+
+.filtro-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.filtro-btn {
+    text-align: left;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    color: #334155;
+    transition: all 0.2s ease;
+}
+
+.filtro-btn:hover {
+    background: #f1f5f9;
+    border-color: #cbd5e1;
+}
+
+.filtro-btn.active {
+    background: #2563eb;
+    color: #ffffff !important;
+    border-color: #2563eb;
+}
+
+.filtro-btn.active .profesor-sublabel {
+    color: #dbeafe !important;
+}
+
+/* Central: Header */
+.view-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.view-header h2 {
+    font-size: 1.3rem;
+    color: #0f172a;
+    margin: 0;
+}
+
+.badge-filtro {
+    background: #eff6ff;
+    color: #1d4ed8;
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    border: 1px solid #bfdbfe;
+}
+
+/* TABLA DE ALUMNOS */
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 0.9rem;
+}
+
+.data-table th {
+    background-color: #f8fafc;
+    color: #475569;
+    font-weight: 600;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid #e2e8f0;
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.data-table td {
+    padding: 0.85rem 1rem;
+    border-bottom: 1px solid #f1f5f9;
+    color: #1e293b;
+    vertical-align: middle;
+}
+
+.data-table tbody tr:hover {
+    background-color: #f8fafc;
+}
+
+.codigo-badge {
+    background-color: #f1f5f9;
+    color: #2563eb;
+    font-family: 'Consolas', 'Monaco', monospace;
+    font-size: 0.82rem;
+    font-weight: 700;
+    padding: 0.25rem 0.6rem;
+    border-radius: 6px;
+    border: 1px solid #cbd5e1;
+    display: inline-block;
+}
+
+.accion-link {
+    background: none;
+    border: none;
+    color: #2563eb;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.85rem;
+    padding: 0;
+}
+
+.accion-link:hover {
+    text-decoration: underline;
+    color: #1d4ed8;
+}
+
+/* Panel Derecho y Botones Principales */
+.primary-action-btn {
+    width: 100%;
+    background: #0f172a;
+    color: white;
+    border: none;
+    padding: 0.8rem;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 0.5rem;
+    transition: background 0.2s;
+    font-size: 0.88rem;
+}
+
+.primary-action-btn:hover {
+    background: #1e293b;
+}
+
+/* TARJETAS DE FORMULARIOS (Fondos diferenciados y atractivos) */
+.form-actualizar-card {
+    margin-top: 1rem;
+    padding: 1.2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+/* Fondo especial verde suave para insertar nuevo alumno */
+.form-card-insertar {
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+}
+
+/* Fondo especial azul suave para buscar / actualizar alumno */
+.form-card-buscar {
+    background: #f8fafc;
+    border: 1px solid #cbd5e1;
+}
+
+.form-actualizar-card h4 {
+    font-size: 0.95rem;
+    margin: 0 0 0.8rem 0;
+    color: #0f172a;
+    font-weight: 700;
+}
+
+.form-actualizar-card label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #334155;
+    display: block;
+    margin-top: 0.5rem;
+}
+
+.form-actualizar-card input {
+    width: 100%;
+    padding: 0.55rem;
+    margin-top: 0.25rem;
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-size: 0.85rem;
+    color: #0f172a;
+}
+
+.form-actualizar-card input:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
+}
+
+.select-seccion-custom {
+    width: 100%;
+    padding: 0.55rem;
+    margin-top: 0.25rem;
+    margin-bottom: 0.5rem;
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    color: #0f172a;
+    box-sizing: border-box;
+}
+
+.select-seccion-custom:focus {
+    outline: none;
+    border-color: #2563eb;
+}
+
+.form-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.btn-guardar {
+    flex: 1;
+    background: #16a34a;
+    color: white;
+    border: none;
+    padding: 0.55rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.82rem;
+    transition: opacity 0.2s;
+}
+
+.btn-guardar:hover {
+    opacity: 0.9;
+}
+
+.btn-cancelar {
+    flex: 1;
+    background: #64748b;
+    color: white;
+    border: none;
+    padding: 0.55rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.82rem;
+    transition: opacity 0.2s;
+}
+
+.btn-cancelar:hover {
+    opacity: 0.9;
+}
