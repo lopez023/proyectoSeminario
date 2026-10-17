@@ -1,5 +1,5 @@
-# Etapa 1: Compilar la aplicación con Maven oficial
-FROM maven:3.9.6-eclipse-temurin-17-alpine AS build
+# Etapa 1: Compilar la aplicación con Maven y Java 21
+FROM maven:3.9.6-eclipse-temurin-21-alpine AS build
 WORKDIR /app
 
 # Copiar todo el código fuente al contenedor
@@ -8,7 +8,7 @@ COPY . .
 # Compilar el proyecto directamente con maven
 RUN mvn clean package -DskipTests
 
-# Etapa 2: Ejecutar la aplicación ligera
+# Etapa 2: Ejecutar la aplicación ligera con Java 21 JRE
 FROM eclipse-temurin:21-jre-alpine
 WORKDIR /app
 
