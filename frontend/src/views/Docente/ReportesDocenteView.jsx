@@ -1,7 +1,11 @@
 import React, { useMemo, useState } from 'react';
 import './ReportesDocenteView.css';
 
-const API_URL = 'http://localhost:8080/api/asistencias';
+import { API_BASE_URL } from "../../config.jsx";
+
+
+
+const API_URL = `${API_BASE_URL}/api/asistencias`;;
 const ESTADOS = ['PRESENTE', 'AUSENTE', 'TARDE', 'JUSTIFICADO'];
 
 function fechaLocal(d = new Date()) {

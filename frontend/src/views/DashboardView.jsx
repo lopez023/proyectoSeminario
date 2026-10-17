@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import '../components/Dashboard.css'
+import { API_BASE_URL } from "../../config.jsx";
 
 function DashboardView({ onNavigate }) {
     const [totalAlumnos, setTotalAlumnos] = useState(0)
@@ -10,7 +11,7 @@ function DashboardView({ onNavigate }) {
             const token = localStorage.getItem('jwt_token')
 
             try {
-                const response = await fetch('http://localhost:8080/api/estudiantes/cantidadTotal', {
+                const response = await fetch(`${API_BASE_URL}/api/estudiantes/cantidadTotal`, {
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }

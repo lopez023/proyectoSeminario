@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './PortalDocenteView.css';
 import ControlAsistenciaDocenteView from './ControlAsistenciaDocenteView';
 import ReportesDocenteView from './ReportesDocenteView';
+import { API_BASE_URL } from "../../config.jsx";
 
 function PortalDocenteView({ onLogout }) {
     const [vistaActual, setVistaActual] = useState('inicio'); // 'inicio' | 'asistencia' | 'reportes'
@@ -56,7 +57,7 @@ function PortalDocenteView({ onLogout }) {
 
             try {
                 // Petición a tu API: localhost:8080/api/usuarios/usuario/{usuario}
-                const response = await fetch(`http://localhost:8080/api/usuarios/usuario/${username}`, {
+                const response = await fetch(`${API_BASE_URL}/api/usuarios/usuario/${username}`, {
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }

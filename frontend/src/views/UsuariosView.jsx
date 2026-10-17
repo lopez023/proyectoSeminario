@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import './UsuariosView.css'
+import { API_BASE_URL } from "../config.jsx";
 
 function UsuariosView() {
     const [modalAbierto, setModalAbierto] = useState(false)
@@ -32,7 +33,7 @@ function UsuariosView() {
 
 
         try {
-            const response = await fetch('http://localhost:8080/api/usuarios', {
+            const response = await fetch(`${API_BASE_URL}/api/usuarios`, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -52,7 +53,7 @@ function UsuariosView() {
     const cargarRoles = async () => {
         const token = localStorage.getItem('jwt_token')
         try {
-            const response = await fetch('http://localhost:8080/api/roles', {
+            const response = await fetch('${API_BASE_URL}/api/roles', {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -98,7 +99,7 @@ function UsuariosView() {
         }
 
         try {
-            const response = await fetch('http://localhost:8080/api/usuarios', {
+            const response = await fetch('${API_BASE_URL}/api/usuarios', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
 import './AlumnosView.css'
 
+import { API_BASE_URL } from "../../config.jsx";
+
 function AlumnosView() {
     // Almacena la sección completa seleccionada (grado, docente y lista de estudiantes)
     const [seccionSeleccionada, setSeccionSeleccionada] = useState(null)
@@ -40,7 +42,7 @@ function AlumnosView() {
         }
 
         try {
-            const response = await fetch('http://localhost:8080/api/secciones/con-estudiantes', {
+            const response = await fetch('${API_BASE_URL}/api/secciones/con-estudiantes', {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`
@@ -69,7 +71,7 @@ function AlumnosView() {
         if (!token) return
 
         try {
-            const response = await fetch('http://localhost:8080/api/secciones', {
+            const response = await fetch('${API_BASE_URL}/api/secciones', {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`
@@ -107,8 +109,8 @@ function AlumnosView() {
 
         const esActualizacion = codigoEditando !== null
         const url = esActualizacion
-            ? `http://localhost:8080/api/estudiantes/${codigoEditando}`
-            : 'http://localhost:8080/api/estudiantes'
+            ? `${API_BASE_URL}/api/estudiantes/${codigoEditando}`
+            : '${API_BASE_URL}/api/estudiantes'
         const method = esActualizacion ? 'PUT' : 'POST'
 
         try {
@@ -164,8 +166,9 @@ function AlumnosView() {
             return
         }
 
+
         try {
-            const response = await fetch(`http://localhost:8080/api/estudiantes/${idAlumnoBuscar.trim()}`, {
+            const response = await fetch(`${API_BASE_URL}//localhost:8080/api/estudiantes/${idAlumnoBuscar.trim()}`, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`
