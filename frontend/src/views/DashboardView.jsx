@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import '../components/Dashboard.css'
-import { API_BASE_URL } from "../../config.jsx";
+import { API_BASE_URL } from "../config.jsx";
 
 function DashboardView({ onNavigate }) {
     const [totalAlumnos, setTotalAlumnos] = useState(0)

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import './AlumnosView.css'
 
-import { API_BASE_URL } from "../../config.jsx";
+import { API_BASE_URL } from "../config.jsx";
 
 function AlumnosView() {
     // Almacena la sección completa seleccionada (grado, docente y lista de estudiantes)
