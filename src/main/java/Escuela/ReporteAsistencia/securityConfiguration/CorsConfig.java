@@ -1,7 +1,5 @@
 package Escuela.ReporteAsistencia.securityConfiguration;
 
-package com.tu.paquete.config; // Ajusta a tu paquete real
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
