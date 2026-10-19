@@ -1,10 +1,11 @@
 package Escuela.ReporteAsistencia.securityConfiguration;
 
+package com.tu.paquete.config; // Ajusta a tu paquete real
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
 
 @Configuration
 public class CorsConfig {
@@ -14,9 +15,11 @@ public class CorsConfig {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/api/**")
-                        .allowedOrigins("http://localhost:5173")
-                        .allowedOrigins("https://reporte-asistencia-backend.onrender.com")// URL de tu frontend de Vite/React
+                registry.addMapping("/**") // Permite CORS en todas las rutas
+                        .allowedOrigins(
+                                "http://localhost:5173",                     // Desarrollo local
+                                "https://proyectoseminario-apl7.onrender.com" // Frontend real en Render
+                        )
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*")
                         .allowCredentials(true);
@@ -24,4 +27,3 @@ public class CorsConfig {
         };
     }
 }
-
