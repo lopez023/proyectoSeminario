@@ -168,7 +168,7 @@ function AlumnosView() {
 
 
         try {
-            const response = await fetch(`${API_BASE_URL}//localhost:8080/api/estudiantes/${idAlumnoBuscar.trim()}`, {
+            const response = await fetch(`${API_BASE_URL}/api/estudiantes/${idAlumnoBuscar.trim()}`, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`

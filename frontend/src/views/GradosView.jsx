@@ -31,11 +31,24 @@ function GradosView() {
             const [resGrados, resSecciones, resDocentes] = await Promise.all([
                 fetch(`${API_BASE_URL}/api/grado`, { headers }),
                 fetch(`${API_BASE_URL}/api/secciones`, { headers }),
-                fetch(`${API_BASE_URL}/api/docentes`, { headers }).catch(() => ({ ok: false }))
+                fetch(`${API_BASE_URL}/api/perfilDocente`, { headers }).catch(() => ({ ok: false })) // Cambiado a /api/docente
             ])
 
+            // 🔍 Diagnóstico en la consola del navegador (Presiona F12)
+            console.log("Status /api/grado:", resGrados.status);
+            console.log("Status /api/secciones:", resSecciones.status);
+
+            if (!resGrados.ok) {
+                const text = await resGrados.text();
+                console.error("Respuesta fallida en Grados:", text);
+            }
+            if (!resSecciones.ok) {
+                const text = await resSecciones.text();
+                console.error("Respuesta fallida en Secciones:", text);
+            }
+
             if (!resGrados.ok || !resSecciones.ok) {
-                throw new Error('Error al cargar la información académica')
+                throw new Error(`Error HTTP: Grados [${resGrados.status}], Secciones [${resSecciones.status}]`)
             }
 
             const grados = await resGrados.json()
@@ -56,6 +69,7 @@ function GradosView() {
 
             setGradosData(gradosConSecciones)
         } catch (err) {
+            console.error("Error general en fetchData:", err)
             setError(err.message)
         } finally {
             setLoading(false)

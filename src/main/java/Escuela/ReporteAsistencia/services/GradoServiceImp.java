@@ -5,9 +5,10 @@ import Escuela.ReporteAsistencia.interfaceModels.GradoService;
 import Escuela.ReporteAsistencia.mappers.GradoMapper;
 import Escuela.ReporteAsistencia.models.Grados;
 import Escuela.ReporteAsistencia.repositories.GradoRepository;
-import jakarta.transaction.Transactional;
+//import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -29,12 +30,14 @@ public class GradoServiceImp implements GradoService {
         return gradoMapper.toDto(guardado);
     }
 
-    // READ (Todos)
+    @Transactional(readOnly = true)
     public List<GradoDTO> listar() {
         return gradoMapper.toDtoList(gradosRepository.findAll());
     }
 
     // READ (Uno por ID)
+
+    @Transactional(readOnly = true)
     public GradoDTO obtenerPorId(Long id) {
         Grados grado = gradosRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Grado no encontrado con ID: " + id));

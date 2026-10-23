@@ -10,12 +10,12 @@ import Escuela.ReporteAsistencia.models.Secciones;
 import Escuela.ReporteAsistencia.repositories.GradoRepository;
 import Escuela.ReporteAsistencia.repositories.PerfilDocenteRepository;
 import Escuela.ReporteAsistencia.repositories.SeccionesRepository;
-import jakarta.transaction.Transactional;
+//import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -55,6 +55,7 @@ public class SeccionesServiceImp implements SeccionesService {
     }
 
     // READ (Todos)
+    @Transactional(readOnly = true)
     public List<SeccionDTO> listar() {
         return mapper.toDtoList(seccionRepository.findAll());
     }
