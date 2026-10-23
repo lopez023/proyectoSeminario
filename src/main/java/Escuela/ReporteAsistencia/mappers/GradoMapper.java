@@ -8,7 +8,20 @@ import org.mapstruct.MappingTarget;
 
 import java.util.List;
 
+@Mapper(componentModel = "spring")
+public interface GradoMapper {
+    GradoDTO toDto(Grados grado);
 
+    List<GradoDTO> toDtoList(List<Grados> grados);
+
+    @Mapping(target = "id", ignore = true)
+    Grados toEntity(GradoDTO dto);
+
+    @Mapping(target = "id", ignore = true)
+    void updateEntityFromDto(GradoDTO dto, @MappingTarget Grados grado);
+}
+
+/*
 @Mapper(componentModel = "spring")
 public interface GradoMapper {
     GradoDTO toDto(Grados grado);
@@ -22,4 +35,4 @@ public interface GradoMapper {
     @Mapping(target = "secciones", ignore = true)
     @Mapping(target = "id", ignore = true)
     void updateEntityFromDto(GradoDTO dto, @MappingTarget Grados grado);
-}
+}*/

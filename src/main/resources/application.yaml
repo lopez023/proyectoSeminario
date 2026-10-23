@@ -6,7 +6,7 @@ spring:
     name: ReporteAsistencia
 
   datasource:
-    url: jdbc:postgresql://aws-0-us-east-1.pooler.supabase.com:6543/postgres?user=postgres.urfkbmnidjyngjxwabus&password=8tu3ER59S6EY0vLo
+    url: jdbc:postgresql://aws-0-us-east-1.pooler.supabase.com:6543/postgres?user=postgres.urfkbmnidjyngjxwabus&password=8tu3ER59S6EY0vLo&prepareThreshold=0
 
     driver-class-name: org.postgresql.Driver
 

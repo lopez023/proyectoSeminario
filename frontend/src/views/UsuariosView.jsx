@@ -53,7 +53,7 @@ function UsuariosView() {
     const cargarRoles = async () => {
         const token = localStorage.getItem('jwt_token')
         try {
-            const response = await fetch('${API_BASE_URL}/api/roles', {
+            const response = await fetch(`${API_BASE_URL}/api/roles`, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -99,7 +99,7 @@ function UsuariosView() {
         }
 
         try {
-            const response = await fetch('${API_BASE_URL}/api/usuarios', {
+            const response = await fetch(`${API_BASE_URL}/api/usuarios`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

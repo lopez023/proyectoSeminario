@@ -42,7 +42,7 @@ function AlumnosView() {
         }
 
         try {
-            const response = await fetch('${API_BASE_URL}/api/secciones/con-estudiantes', {
+            const response = await fetch(`${API_BASE_URL}/api/secciones/con-estudiantes`, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`
@@ -71,7 +71,7 @@ function AlumnosView() {
         if (!token) return
 
         try {
-            const response = await fetch('${API_BASE_URL}/api/secciones', {
+            const response = await fetch(`${API_BASE_URL}/api/secciones`, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`
@@ -110,7 +110,7 @@ function AlumnosView() {
         const esActualizacion = codigoEditando !== null
         const url = esActualizacion
             ? `${API_BASE_URL}/api/estudiantes/${codigoEditando}`
-            : '${API_BASE_URL}/api/estudiantes'
+            : `${API_BASE_URL}/api/estudiantes`
         const method = esActualizacion ? 'PUT' : 'POST'
 
         try {
