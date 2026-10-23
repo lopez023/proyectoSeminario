@@ -8,9 +8,10 @@ import Escuela.ReporteAsistencia.models.Rol;
 import Escuela.ReporteAsistencia.models.Usuarios;
 import Escuela.ReporteAsistencia.repositories.PerfilDocenteRepository;
 import Escuela.ReporteAsistencia.repositories.UsuarioRepository;
-import jakarta.transaction.Transactional;
+//import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.Period;
@@ -61,12 +62,13 @@ public class PerfilDocenteServiceImp implements PerfilDocenteService {
 
 
 
-    // READ (Todos)
+    @Transactional(readOnly = true)
     public List<PerfilDocenteDTO> listar() {
         return mapper.toDtoList(docenteRepository.findAll());
     }
 
     // READ (Uno por ID)
+    @Transactional(readOnly = true)
     public PerfilDocenteDTO obtenerPorId(Long id) {
         PerfilDocente docente = docenteRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Docente no encontrado con ID: " + id));

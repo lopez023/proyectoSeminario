@@ -61,6 +61,7 @@ public class SeccionesServiceImp implements SeccionesService {
     }
 
     // READ (Uno por ID)
+    @Transactional(readOnly = true)
     public SeccionDTO obtenerPorId(Long id) {
         Secciones seccion = seccionRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Sección no encontrada con ID: " + id));
@@ -106,6 +107,7 @@ public class SeccionesServiceImp implements SeccionesService {
     }
 
 
+    @Transactional(readOnly = true)
     public List<SeccionProjection> obtenerSeccionesConEstudiantes() {
         List<SeccionProjection> secciones = seccionRepository.findAllProjections();
         return secciones;
