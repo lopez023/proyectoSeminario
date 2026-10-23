@@ -85,7 +85,7 @@ function PortalDocenteView({ onLogout }) {
             <aside className="docente-sidebar" onClick={(e) => e.stopPropagation()}>
                 <div className="sidebar-brand">
                     <span className="brand-icon">🏫</span>
-                    <h2>Mi Escuela</h2>
+                    <h2>Catequistes de la Paroquia del Espiritu Santo, catedral Quetzaltenango</h2>
                 </div>
 
                 <nav className="sidebar-nav">
@@ -184,11 +184,11 @@ function PortalDocenteView({ onLogout }) {
                     <>
                         <div className="welcome-banner">
                             <div className="welcome-text">
-                                <h1>¡Bienvenida, {loadingUsuario ? '...' : userData.username}!</h1>
+                                <h1>¡Bienvenido, {loadingUsuario ? '...' : userData.username}!</h1>
                                 <p>Aquí puedes registrar y consultar la asistencia de tus alumnos.</p>
                             </div>
                             <div className="welcome-image">
-                                <span className="welcome-emoji">🍎📚</span>
+                                <span className="welcome-emoji"> 📚</span>
                             </div>
                         </div>
 
