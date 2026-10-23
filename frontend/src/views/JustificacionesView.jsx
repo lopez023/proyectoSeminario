@@ -18,7 +18,7 @@ function JustificacionesView() {
         {
             id: 1,
             alumno: 'Carlos García',
-            grado: '3.° Primaria',
+            grado: 'Comunion y Confirmacion',
             seccion: 'A',
             fechaInasistencia: '2026-10-12',
             motivo: 'Cita médica documentada con constancia adjunta del pediatra.',
@@ -27,7 +27,7 @@ function JustificacionesView() {
         {
             id: 2,
             alumno: 'Ana Morales',
-            grado: '2.° Primaria',
+            grado: 'Comunion y Confirmacion',
             seccion: 'B',
             fechaInasistencia: '2026-10-14',
             motivo: 'Motivos familiares de fuerza mayor.',

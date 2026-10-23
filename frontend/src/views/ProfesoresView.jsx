@@ -51,29 +51,29 @@ function ProfesoresView() {
                     <tr>
                         <td>1</td>
                         <td>Juan Pérez</td>
-                        <td>3.° Primaria</td>
+                        <td>Comunion y Confirmacion</td>
                         <td>A</td>
                         <td><span className="status present">Presente</span></td>
                     </tr>
                     <tr>
                         <td>2</td>
                         <td>María López</td>
-                        <td>3.° Primaria</td>
+                        <td>Comunion y Confirmacion</td>
                         <td>A</td>
                         <td><span className="status present">Presente</span></td>
                     </tr>
                     <tr>
                         <td>3</td>
                         <td>Carlos García</td>
-                        <td>3.° Primaria</td>
+                        <td>Comunion y Confirmacion</td>
                         <td>A</td>
                         <td><span className="status absent">Ausente</span></td>
                     </tr>
                     <tr>
                         <td>4</td>
                         <td>Ana Morales</td>
-                        <td>3.° Primaria</td>
-                        <td>A</td>
+                        <td>Comunion y Confirmacion</td>
+                        <td>B</td>
                         <td><span className="status late">Tarde</span></td>
                     </tr>
                     </tbody>

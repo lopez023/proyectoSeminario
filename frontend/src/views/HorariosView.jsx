@@ -6,11 +6,11 @@ function HorariosView() {
 
     // Horario semanal de ejemplo
     const horarioData = [
-        { hora: '08:00 AM - 08:45 AM', lunes: 'Matemáticas', martes: 'Comunicación', miercoles: 'Matemáticas', jueves: 'Ciencias Naturales', viernes: 'Educación Física' },
+    /*    { hora: '08:00 AM - 08:45 AM', lunes: 'Matemáticas', martes: 'Comunicación', miercoles: 'Matemáticas', jueves: 'Ciencias Naturales', viernes: 'Educación Física' },
         { hora: '08:45 AM - 09:30 AM', lunes: 'Matemáticas', martes: 'Comunicación', miercoles: 'Matemáticas', jueves: 'Ciencias Naturales', viernes: 'Educación Física' },
         { hora: '09:30 AM - 10:00 AM', lunes: 'RECREO', martes: 'RECREO', miercoles: 'RECREO', jueves: 'RECREO', viernes: 'RECREO' },
         { hora: '10:00 AM - 10:45 AM', lunes: 'Estudios Sociales', martes: 'Inglés', miercoles: 'Computación', jueves: 'Arte', viernes: 'Música' },
-        { hora: '10:45 AM - 11:30 AM', lunes: 'Estudios Sociales', martes: 'Inglés', miercoles: 'Computación', jueves: 'Arte', viernes: 'Música' }
+        { hora: '10:45 AM - 11:30 AM', lunes: 'Estudios Sociales', martes: 'Inglés', miercoles: 'Computación', jueves: 'Arte', viernes: 'Música' }*/
     ]
 
     return (
@@ -28,10 +28,9 @@ function HorariosView() {
                         onChange={(e) => setGradoSeleccionado(e.target.value)}
                         className="select-grado"
                     >
-                        <option value="3.° Primaria - Sección A">3.° Primaria - Sección A</option>
-                        <option value="3.° Primaria - Sección B">3.° Primaria - Sección B</option>
-                        <option value="2.° Primaria - Sección A">2.° Primaria - Sección A</option>
-                        <option value="1.° Primaria - Sección A">1.° Primaria - Sección A</option>
+                        <option value="3.° Primaria - Sección A">Comunion y Confirmacion</option>
+                        <option value="3.° Primaria - Sección B">Comunion y Confirmacion</option>
+                        <option value="2.° Primaria - Sección A">Comunion y Confirmacion</option>
                     </select>
                 </div>
             </div>

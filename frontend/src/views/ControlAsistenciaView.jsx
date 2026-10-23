@@ -4,7 +4,7 @@ import autoTable from 'jspdf-autotable'
 import './ControlAsistenciaView.css'
 
 function ControlAsistenciaView() {
-    const [gradoSeccion, setGradoSeccion] = useState('3.° Primaria - Sección A')
+    const [gradoSeccion, setGradoSeccion] = useState('Comunion y Confirmacion A')
     const [tipoReporte, setTipoReporte] = useState('semanal') // 'semanal' o 'mensual'
 
     // Datos simulados de asistencia
@@ -88,10 +88,9 @@ function ControlAsistenciaView() {
                 <div className="filtro-grupo">
                     <label>Seleccionar Grado y Sección:</label>
                     <select value={gradoSeccion} onChange={(e) => setGradoSeccion(e.target.value)}>
-                        <option value="3.° Primaria - Sección A">3.° Primaria - Sección A</option>
-                        <option value="3.° Primaria - Sección B">3.° Primaria - Sección B</option>
-                        <option value="2.° Primaria - Sección A">2.° Primaria - Sección A</option>
-                        <option value="1.° Primaria - Sección A">1.° Primaria - Sección A</option>
+                        <option value="3.° Primaria - Sección A">Comunion y Confirmacion Sección A</option>
+                        <option value="3.° Primaria - Sección B">Comunion y Confirmacion Seccion B</option>
+                        <option value="2.° Primaria - Sección A">Comunion y Confirmacion Seccion C</option>
                     </select>
                 </div>
 

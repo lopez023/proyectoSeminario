@@ -17,7 +17,7 @@ function MainLayout({ onLogout }) {
         <div className="dashboard-container">
             <aside className="sidebar">
                 <div className="sidebar-logo">
-                    <h2>🎓 Mi Escuela</h2>
+                    <h2>🎓 Catequistes de la Paroquia del Espiritu Santo, catedral Quetzaltenango</h2>
                     <p>Control de Asistencia</p>
                 </div>
                 <nav className="sidebar-nav">

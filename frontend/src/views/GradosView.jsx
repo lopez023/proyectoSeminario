@@ -6,37 +6,26 @@ function GradosView() {
     const [gradosData] = useState([
         {
             id: 1,
-            grado: '1.° Primaria',
-            descripcion: 'Nivel básico de educación primaria',
+            grado: 'Comunion y Confirmacion',
+            descripcion: ' ',
             secciones: [
-                { seccion: 'A', profesor: 'Lic. Carlos Mendoza', alumnosCount: 28, estado: 'Activo' },
-                { seccion: 'B', profesor: 'Prof. Ana Gómez', alumnosCount: 25, estado: 'Activo' }
+                { seccion: 'A', profesor: 'Lic. Carlos Mendoza', alumnosCount: 28, estado: 'Activo' }
             ]
         },
         {
             id: 2,
-            grado: '2.° Primaria',
-            descripcion: 'Consolidación de lectoescritura',
+            grado: 'Comunion y Confirmacion',
+            descripcion: ' ',
             secciones: [
-                { seccion: 'A', profesor: 'Licda. Sofía Morales', alumnosCount: 30, estado: 'Activo' },
-                { seccion: 'B', profesor: 'Prof. Jorge Ramírez', alumnosCount: 27, estado: 'Activo' }
+                { seccion: 'B', profesor: 'Licda. Sofía Morales', alumnosCount: 30, estado: 'Activo' }
             ]
         },
         {
             id: 3,
-            grado: '3.° Primaria',
-            descripcion: 'Desarrollo de pensamiento lógico',
+            grado: 'Comunion y Confirmacion',
+            descripcion: ' ',
             secciones: [
-                { seccion: 'A', profesor: 'Lic. Roberto Castillo', alumnosCount: 26, estado: 'Activo' },
-                { seccion: 'B', profesor: 'Licda. Carmen Ruiz', alumnosCount: 29, estado: 'Licencia' }
-            ]
-        },
-        {
-            id: 4,
-            grado: '4.° Primaria',
-            descripcion: 'Transición a ciclos intermedios',
-            secciones: [
-                { seccion: 'A', profesor: 'Prof. Luis Herrera', alumnosCount: 24, estado: 'Activo' }
+                { seccion: 'C', profesor: 'Lic. Roberto Castillo', alumnosCount: 26, estado: 'Activo' }
             ]
         }
     ])

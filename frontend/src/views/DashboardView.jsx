@@ -98,7 +98,7 @@ function DashboardView({ onNavigate }) {
                         <tr>
                             <td>1</td>
                             <td>Juan Pérez</td>
-                            <td>3.° Primaria</td>
+                            <td>Comunion y Confirmacion</td>
                             <td>A</td>
                             <td><span className="status present">Presente</span></td>
                             <td>7:28 AM</td>
@@ -106,7 +106,7 @@ function DashboardView({ onNavigate }) {
                         <tr>
                             <td>2</td>
                             <td>María López</td>
-                            <td>2.° Primaria</td>
+                            <td>Comunion y Confirmacion</td>
                             <td>B</td>
                             <td><span className="status present">Presente</span></td>
                             <td>7:30 AM</td>
