@@ -1,17 +1,34 @@
 import { useState, useEffect } from 'react'
 import '../components/Dashboard.css'
-import { API_BASE_URL } from "../config.jsx";
+import { API_BASE_URL } from "../config.jsx"
 
 function DashboardView({ onNavigate }) {
-    const [totalAlumnos, setTotalAlumnos] = useState(0)
+    const [dashboardData, setDashboardData] = useState({
+        totalAlumnos: 0,
+        presentesHoy: 0,
+        porcentajePresentes: 0,
+        ausentesHoy: 0,
+        porcentajeAusentes: 0,
+        tardanzasHoy: 0,
+        porcentajeTardanzas: 0,
+        ultimasAsistencias: []
+    })
     const [loading, setLoading] = useState(true)
 
+    // Formatear la fecha actual dinámicamente
+    const fechaHoyFormateada = new Date().toLocaleDateString('es-ES', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+    })
+
     useEffect(() => {
-        const fetchTotalAlumnos = async () => {
+        const fetchDashboardData = async () => {
             const token = localStorage.getItem('jwt_token')
 
             try {
-                const response = await fetch(`${API_BASE_URL}/api/estudiantes/cantidadTotal`, {
+                const response = await fetch(`${API_BASE_URL}/api/asistencias/resumen`, {
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }
@@ -19,13 +36,9 @@ function DashboardView({ onNavigate }) {
 
                 if (response.ok) {
                     const data = await response.json()
-                    console.log("Dato crudo recibido de la API:", data)
-
-                    // Forzamos la conversión a número por seguridad
-                    const cantidadNumerica = Number(data)
-                    setTotalAlumnos(cantidadNumerica)
+                    setDashboardData(data)
                 } else {
-                    console.error("Error en la respuesta. Status:", response.status)
+                    console.error("Error al obtener los datos del Dashboard. Status:", response.status)
                 }
             } catch (err) {
                 console.error('Error de red:', err)
@@ -34,8 +47,18 @@ function DashboardView({ onNavigate }) {
             }
         }
 
-        fetchTotalAlumnos()
+        fetchDashboardData()
     }, [])
+
+    const getBadgeClass = (estado) => {
+        switch (estado) {
+            case 'PRESENTE': return 'status present'
+            case 'AUSENTE': return 'status absent'
+            case 'TARDE': return 'status late'
+            case 'JUSTIFICADO': return 'status justified'
+            default: return 'status pending'
+        }
+    }
 
     return (
         <div className="dashboard-body">
@@ -44,7 +67,9 @@ function DashboardView({ onNavigate }) {
                     <h1>Dashboard</h1>
                     <p>Resumen general del control de asistencia</p>
                 </div>
-                <div className="date-badge">📅 Viernes, 3 de octubre de 2026</div>
+                <div className="date-badge" style={{ textTransform: 'capitalize' }}>
+                    📅 {fechaHoyFormateada}
+                </div>
             </div>
 
             {/* Tarjetas de Métricas superiores */}
@@ -52,28 +77,40 @@ function DashboardView({ onNavigate }) {
                 <div className="metric-card blue">
                     <span className="metric-icon">👥</span>
                     <div>
-                        <h2>{loading ? '...' : totalAlumnos}</h2>
+                        <h2>{loading ? '...' : dashboardData.totalAlumnos}</h2>
                         <p>Total de alumnos</p>
                     </div>
                 </div>
+
                 <div className="metric-card green">
                     <span className="metric-icon">✅</span>
                     <div>
-                        <h2>98 <span className="badge-percent">82%</span></h2>
+                        <h2>
+                            {loading ? '...' : dashboardData.presentesHoy}{' '}
+                            <span className="badge-percent">{loading ? '0%' : `${dashboardData.porcentajePresentes}%`}</span>
+                        </h2>
                         <p>Presentes hoy</p>
                     </div>
                 </div>
+
                 <div className="metric-card red">
                     <span className="metric-icon">❌</span>
                     <div>
-                        <h2>15 <span className="badge-percent">13%</span></h2>
+                        <h2>
+                            {loading ? '...' : dashboardData.ausentesHoy}{' '}
+                            <span className="badge-percent">{loading ? '0%' : `${dashboardData.porcentajeAusentes}%`}</span>
+                        </h2>
                         <p>Ausentes hoy</p>
                     </div>
                 </div>
+
                 <div className="metric-card yellow">
                     <span className="metric-icon">⏰</span>
                     <div>
-                        <h2>7 <span className="badge-percent">6%</span></h2>
+                        <h2>
+                            {loading ? '...' : dashboardData.tardanzasHoy}{' '}
+                            <span className="badge-percent">{loading ? '0%' : `${dashboardData.porcentajeTardanzas}%`}</span>
+                        </h2>
                         <p>Tardanzas hoy</p>
                     </div>
                 </div>
@@ -83,36 +120,46 @@ function DashboardView({ onNavigate }) {
             <div className="content-grid">
                 <div className="card table-card">
                     <h3>Últimas asistencias registradas</h3>
-                    <table className="data-table">
-                        <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Nombre del alumno</th>
-                            <th>Grado</th>
-                            <th>Sección</th>
-                            <th>Estado</th>
-                            <th>Hora</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Juan Pérez</td>
-                            <td>Comunion y Confirmacion</td>
-                            <td>A</td>
-                            <td><span className="status present">Presente</span></td>
-                            <td>7:28 AM</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>María López</td>
-                            <td>Comunion y Confirmacion</td>
-                            <td>B</td>
-                            <td><span className="status present">Presente</span></td>
-                            <td>7:30 AM</td>
-                        </tr>
-                        </tbody>
-                    </table>
+                    {loading ? (
+                        <p style={{ padding: '1rem', textAlign: 'center' }}>Cargando registros...</p>
+                    ) : (
+                        <table className="data-table">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Nombre del alumno</th>
+                                <th>Grado</th>
+                                <th>Sección</th>
+                                <th>Estado</th>
+                                <th>Hora</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {dashboardData.ultimasAsistencias && dashboardData.ultimasAsistencias.length > 0 ? (
+                                dashboardData.ultimasAsistencias.map((item, index) => (
+                                    <tr key={item.id || index}>
+                                        <td>{index + 1}</td>
+                                        <td>{item.nombreAlumno}</td>
+                                        <td>{item.gradoNombre}</td>
+                                        <td>{item.seccionNombre}</td>
+                                        <td>
+                                                <span className={getBadgeClass(item.estado)}>
+                                                    {item.estado}
+                                                </span>
+                                        </td>
+                                        <td>{item.hora ? item.hora.substring(0, 5) : 'N/A'}</td>
+                                    </tr>
+                                ))
+                            ) : (
+                                <tr>
+                                    <td colSpan="6" style={{ textAlign: 'center' }}>
+                                        No se han registrado asistencias el día de hoy.
+                                    </td>
+                                </tr>
+                            )}
+                            </tbody>
+                        </table>
+                    )}
                 </div>
 
                 {/* Accesos Rápidos */}

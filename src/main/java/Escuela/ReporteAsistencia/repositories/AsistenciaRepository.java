@@ -1,5 +1,6 @@
 package Escuela.ReporteAsistencia.repositories;
 
+import Escuela.ReporteAsistencia.dtos.asistenciaDTO.UltimaAsistenciaDTO;
 import Escuela.ReporteAsistencia.enums.EstadoAsistencias;
 import Escuela.ReporteAsistencia.models.Asistencias;
 import Escuela.ReporteAsistencia.models.Estudiantes;
@@ -8,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.awt.print.Pageable;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
@@ -36,6 +38,29 @@ public interface AsistenciaRepository extends JpaRepository<Asistencias,Long> {
             LocalDate fecha,
             Collection<Long> estudianteIds
     );
+
+
+
+    long countByFechaAndEstado(LocalDate fecha, EstadoAsistencias estado);
+
+    @Query("""
+    SELECT new Escuela.ReporteAsistencia.dtos.asistenciaDTO.UltimaAsistenciaDTO(
+        a.id,
+        CONCAT(e.nombre, ' ', e.primerApellido),
+        g.nombreGrado,
+        s.nombre,
+        a.estado,
+        a.hora
+    )
+    FROM Asistencias a
+    JOIN a.estudiante e
+    JOIN e.seccion s
+    JOIN s.grado g
+    WHERE a.fecha = :fecha
+    ORDER BY a.hora DESC, a.id DESC
+    LIMIT 5
+""")
+    List<UltimaAsistenciaDTO> obtenerUltimasAsistenciasDelDia(@Param("fecha") LocalDate fecha);
 
 }
 

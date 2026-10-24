@@ -2,14 +2,21 @@ package Escuela.ReporteAsistencia.controllers;
 
 import Escuela.ReporteAsistencia.dtos.AsistenciaDTO;
 import Escuela.ReporteAsistencia.dtos.asistenciaDTO.*;
+import Escuela.ReporteAsistencia.enums.EstadoAsistencias;
+import Escuela.ReporteAsistencia.repositories.AsistenciaRepository;
+import Escuela.ReporteAsistencia.repositories.EstudianteRepository;
 import Escuela.ReporteAsistencia.services.AsistenciaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+// CORRECTO:
+
+import java.awt.print.Pageable;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -17,6 +24,12 @@ import java.util.List;
 @RequestMapping("api/asistencias")
 public class AsistenciaController {
 
+
+    @Autowired
+    private EstudianteRepository estudiantesRepository;
+
+    @Autowired
+    private AsistenciaRepository asistenciasRepository;
 
 
     private final AsistenciaService asistenciaService;
@@ -92,6 +105,38 @@ public class AsistenciaController {
                 );
 
         return ResponseEntity.ok(resultado);
+    }
+
+
+
+
+    @GetMapping("/resumen")
+    public ResponseEntity<DashboardResumenDTO> obtenerResumenDashboard() {
+        LocalDate hoy = LocalDate.now();
+
+        long totalAlumnos = estudiantesRepository.count();
+        long presentes = asistenciasRepository.countByFechaAndEstado(hoy, EstadoAsistencias.PRESENTE);
+        long ausentes = asistenciasRepository.countByFechaAndEstado(hoy, EstadoAsistencias.AUSENTE);
+        long tardanzas = asistenciasRepository.countByFechaAndEstado(hoy, EstadoAsistencias.TARDE);
+
+        // Cálculo de porcentajes evitando división entre cero
+        int pctPresentes = totalAlumnos > 0 ? (int) Math.round((presentes * 100.0) / totalAlumnos) : 0;
+        int pctAusentes = totalAlumnos > 0 ? (int) Math.round((ausentes * 100.0) / totalAlumnos) : 0;
+        int pctTardanzas = totalAlumnos > 0 ? (int) Math.round((tardanzas * 100.0) / totalAlumnos) : 0;
+
+        // Obtener las últimas 5 asistencias del día
+
+        List<UltimaAsistenciaDTO> ultimasAsistencias = asistenciasRepository.obtenerUltimasAsistenciasDelDia(hoy);
+
+        DashboardResumenDTO resumen = new DashboardResumenDTO(
+                totalAlumnos,
+                presentes, pctPresentes,
+                ausentes, pctAusentes,
+                tardanzas, pctTardanzas,
+                ultimasAsistencias
+        );
+
+        return ResponseEntity.ok(resumen);
     }
 
 }
