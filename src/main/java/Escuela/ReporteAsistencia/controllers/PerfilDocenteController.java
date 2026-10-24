@@ -9,6 +9,7 @@ import Escuela.ReporteAsistencia.models.Secciones;
 import Escuela.ReporteAsistencia.repositories.PerfilDocenteRepository;
 import Escuela.ReporteAsistencia.repositories.SeccionesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -56,31 +57,53 @@ public class PerfilDocenteController {
 
 
     @GetMapping("/{id}/dashboard")
-    public ResponseEntity<DocenteVistaDTO> obtenerDashboardDocente(@PathVariable Long id) {
-        PerfilDocente docente = docenteRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Docente no encontrado"));
+    public ResponseEntity<?> obtenerDashboardDocente(@PathVariable Long id) {
+        try {
+            PerfilDocente docente = docenteRepository.findById(id).orElse(null);
 
-        Secciones seccion = docente.getSecciones();
-        if (seccion == null) {
-            return ResponseEntity.ok(new DocenteVistaDTO(
+            if (docente == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body("Docente no encontrado con ID: " + id);
+            }
+
+            Secciones seccion = docente.getSecciones();
+
+            // Construcción segura del nombre completo del docente evitando NPE
+            String nombreDocente = (docente.getNombre() != null ? docente.getNombre() : "") + " " +
+                    (docente.getPrimerApellido() != null ? docente.getPrimerApellido() : "");
+
+            // Manejo seguro si el docente no tiene sección asignada en la BD
+            if (seccion == null) {
+                DocenteVistaDTO respuestaVacia = new DocenteVistaDTO(
+                        docente.getId(),
+                        nombreDocente.trim(),
+                        "Sin Grado",
+                        "Sin Sección",
+                        Collections.emptyList()
+                );
+                return ResponseEntity.ok(respuestaVacia);
+            }
+
+            // Obtener estudiantes de la sección del docente
+            List<EstudianteResumenDTO> estudiantes = seccionesRepository.obtenerEstudiantesConUltimaAsistencia(id);
+
+            String nombreGrado = (seccion.getGrado() != null) ? seccion.getGrado().getNombreGrado() : "Sin Grado";
+            String nombreSeccion = (seccion.getNombre() != null) ? seccion.getNombre() : "Sin Sección";
+
+            DocenteVistaDTO response = new DocenteVistaDTO(
                     docente.getId(),
-                    docente.getNombre() + " " + docente.getPrimerApellido(),
-                    "Sin asignación",
-                    "N/A",
-                    Collections.emptyList()
-            ));
+                    nombreDocente.trim(),
+                    nombreGrado,
+                    nombreSeccion,
+                    estudiantes != null ? estudiantes : Collections.emptyList()
+            );
+
+            return ResponseEntity.ok(response);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error al procesar el dashboard del docente: " + e.getMessage());
         }
-
-        List<EstudianteResumenDTO> estudiantes = seccionesRepository.obtenerEstudiantesConUltimaAsistencia(id);
-
-        DocenteVistaDTO response = new DocenteVistaDTO(
-                docente.getId(),
-                docente.getNombre() + " " + docente.getPrimerApellido(),
-                seccion.getGrado().getNombreGrado(),
-                seccion.getNombre(),
-                estudiantes
-        );
-
-        return ResponseEntity.ok(response);
     }
 }

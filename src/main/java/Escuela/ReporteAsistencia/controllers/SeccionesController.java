@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -65,22 +66,46 @@ public class SeccionesController {
 
 
     @GetMapping("/SeccionesYGrados")
-    public ResponseEntity<List<SeccionesDTO>> obtenerTodasLasSecciones() {
-        List<Secciones> listaSecciones = seccionesRepository.findAll();
+    public ResponseEntity<List<SeccionesDTO>> obtenerSeccionesConGrados() {
+        try {
+            // Intenta la consulta optimizada por BD
+            List<SeccionesDTO> secciones = seccionesRepository.obtenerSeccionesConConteoEstudiantes();
+            return ResponseEntity.ok(secciones);
+        } catch (Exception e) {
+            System.err.println("Error en JPQL / PostgreSQL, ejecutando mapeo de respaldo: " + e.getMessage());
 
-        List<SeccionesDTO> dtos = listaSecciones.stream().map(sec -> new SeccionesDTO(
-                sec.getId(),
-                sec.getNombre(),
-                sec.getCupoMaximo(),
-                sec.getGrado() != null ? sec.getGrado().getId() : null,
-                sec.getGrado() != null ? sec.getGrado().getNombreGrado() : null,
-                sec.getDocente() != null ? sec.getDocente().getId() : null,
-                sec.getDocente() != null
-                        ? (sec.getDocente().getNombre() + " " + (sec.getDocente().getPrimerApellido() != null ? sec.getDocente().getPrimerApellido() : ""))
-                        : "Sin asignar",
-                sec.getEstudiantes() != null ? (long) sec.getEstudiantes().size() : 0L
-        )).toList();
+            // Mapeo seguro en memoria si PostgreSQL falla en Render
+            List<Secciones> listaEntidades = seccionesRepository.findAll();
+            List<SeccionesDTO> dtosFallback = new ArrayList<>();
 
-        return ResponseEntity.ok(dtos);
+            for (Secciones sec : listaEntidades) {
+                Long docenteId = null;
+                String nombreDocente = "Sin asignar";
+
+                if (sec.getDocente() != null) {
+                    docenteId = sec.getDocente().getId();
+                    String nom = sec.getDocente().getNombre() != null ? sec.getDocente().getNombre() : "";
+                    String ape = sec.getDocente().getPrimerApellido() != null ? sec.getDocente().getPrimerApellido() : "";
+                    nombreDocente = (nom + " " + ape).trim();
+                }
+
+                Long gradoId = sec.getGrado() != null ? sec.getGrado().getId() : null;
+                String nombreGrado = sec.getGrado() != null ? sec.getGrado().getNombreGrado() : "Sin Grado";
+                long totalEstudiantes = sec.getEstudiantes() != null ? sec.getEstudiantes().size() : 0L;
+
+                dtosFallback.add(new SeccionesDTO(
+                        sec.getId(),
+                        sec.getNombre(),
+                        sec.getCupoMaximo(),
+                        gradoId,
+                        nombreGrado,
+                        docenteId,
+                        nombreDocente,
+                        totalEstudiantes
+                ));
+            }
+
+            return ResponseEntity.ok(dtosFallback);
+        }
     }
 }

@@ -57,8 +57,11 @@ public interface SeccionesRepository extends JpaRepository<Secciones, Long> {
             g.id,
             g.nombreGrado,
             d.id,
-            CONCAT(d.nombre, ' ', COALESCE(d.primerApellido, '')),
-            COUNT(e.id)
+            CASE 
+                WHEN d.id IS NOT NULL THEN CONCAT(d.nombre, ' ', COALESCE(d.primerApellido, ''))
+                ELSE 'Sin asignar' 
+            END,
+            COUNT(DISTINCT e.id)
         )
         FROM Secciones s
         JOIN s.grado g
