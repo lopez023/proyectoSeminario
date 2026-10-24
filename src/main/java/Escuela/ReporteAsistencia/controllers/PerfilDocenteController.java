@@ -1,11 +1,18 @@
 package Escuela.ReporteAsistencia.controllers;
 
 import Escuela.ReporteAsistencia.dtos.PerfilDocenteDTO;
+import Escuela.ReporteAsistencia.dtos.asistenciaDTO.DocenteVistaDTO;
+import Escuela.ReporteAsistencia.dtos.asistenciaDTO.EstudianteResumenDTO;
 import Escuela.ReporteAsistencia.interfaceModels.PerfilDocenteService;
+import Escuela.ReporteAsistencia.models.PerfilDocente;
+import Escuela.ReporteAsistencia.models.Secciones;
+import Escuela.ReporteAsistencia.repositories.PerfilDocenteRepository;
+import Escuela.ReporteAsistencia.repositories.SeccionesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -13,6 +20,13 @@ import java.util.List;
 public class PerfilDocenteController {
     @Autowired
     private PerfilDocenteService docenteService;
+
+    @Autowired
+    PerfilDocenteRepository docenteRepository;
+
+    @Autowired
+    private SeccionesRepository seccionesRepository;
+
 
     @PostMapping
     public ResponseEntity<PerfilDocenteDTO> crear(@RequestBody PerfilDocenteDTO dto) {
@@ -38,5 +52,35 @@ public class PerfilDocenteController {
     public ResponseEntity<String> eliminar(@PathVariable Long id) {
         docenteService.eliminar(id);
         return ResponseEntity.ok("Docente eliminado correctamente.");
+    }
+
+
+    @GetMapping("/{id}/dashboard")
+    public ResponseEntity<DocenteVistaDTO> obtenerDashboardDocente(@PathVariable Long id) {
+        PerfilDocente docente = docenteRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Docente no encontrado"));
+
+        Secciones seccion = docente.getSecciones();
+        if (seccion == null) {
+            return ResponseEntity.ok(new DocenteVistaDTO(
+                    docente.getId(),
+                    docente.getNombre() + " " + docente.getPrimerApellido(),
+                    "Sin asignación",
+                    "N/A",
+                    Collections.emptyList()
+            ));
+        }
+
+        List<EstudianteResumenDTO> estudiantes = seccionesRepository.obtenerEstudiantesConUltimaAsistencia(id);
+
+        DocenteVistaDTO response = new DocenteVistaDTO(
+                docente.getId(),
+                docente.getNombre() + " " + docente.getPrimerApellido(),
+                seccion.getGrado().getNombreGrado(),
+                seccion.getNombre(),
+                estudiantes
+        );
+
+        return ResponseEntity.ok(response);
     }
 }
