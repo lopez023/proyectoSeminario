@@ -2,9 +2,11 @@ package Escuela.ReporteAsistencia.controllers;
 
 
 import Escuela.ReporteAsistencia.dtos.SeccionDTO;
+import Escuela.ReporteAsistencia.dtos.asistenciaDTO.SeccionesDTO;
 import Escuela.ReporteAsistencia.interfaceModels.SeccionProjection;
 import Escuela.ReporteAsistencia.interfaceModels.SeccionesService;
 import Escuela.ReporteAsistencia.models.Secciones;
+import Escuela.ReporteAsistencia.repositories.SeccionesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -21,6 +23,9 @@ public class SeccionesController {
 
     @Autowired
     private SeccionesService seccionService;
+
+    @Autowired
+    private SeccionesRepository seccionesRepository;
 
     @PostMapping
     public ResponseEntity<SeccionDTO> crear(@RequestBody SeccionDTO dto) {
@@ -57,4 +62,25 @@ public class SeccionesController {
         return ResponseEntity.ok(secciones);
     }
 
+
+
+    @GetMapping("/SeccionesYGrados")
+    public ResponseEntity<List<SeccionesDTO>> obtenerTodasLasSecciones() {
+        List<Secciones> listaSecciones = seccionesRepository.findAll();
+
+        List<SeccionesDTO> dtos = listaSecciones.stream().map(sec -> new SeccionesDTO(
+                sec.getId(),
+                sec.getNombre(),
+                sec.getCupoMaximo(),
+                sec.getGrado() != null ? sec.getGrado().getId() : null,
+                sec.getGrado() != null ? sec.getGrado().getNombreGrado() : null,
+                sec.getDocente() != null ? sec.getDocente().getId() : null,
+                sec.getDocente() != null
+                        ? (sec.getDocente().getNombre() + " " + (sec.getDocente().getPrimerApellido() != null ? sec.getDocente().getPrimerApellido() : ""))
+                        : "Sin asignar",
+                sec.getEstudiantes() != null ? (long) sec.getEstudiantes().size() : 0L
+        )).toList();
+
+        return ResponseEntity.ok(dtos);
+    }
 }

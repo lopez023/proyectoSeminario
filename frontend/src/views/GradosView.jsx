@@ -20,6 +20,8 @@ function GradosView() {
     const [submitting, setSubmitting] = useState(false)
 
     const fetchData = async () => {
+        setLoading(true)
+        setError('')
         try {
             const token = localStorage.getItem('jwt_token')
             const headers = {
@@ -27,25 +29,12 @@ function GradosView() {
                 'Content-Type': 'application/json'
             }
 
-            // Obtener grados, secciones y docentes en paralelo
+            // Petición al nuevo endpoint /api/secciones/SeccionesYGrados
             const [resGrados, resSecciones, resDocentes] = await Promise.all([
                 fetch(`${API_BASE_URL}/api/grado`, { headers }),
-                fetch(`${API_BASE_URL}/api/secciones`, { headers }),
-                fetch(`${API_BASE_URL}/api/perfilDocente`, { headers }).catch(() => ({ ok: false })) // Cambiado a /api/docente
+                fetch(`${API_BASE_URL}/api/secciones/SeccionesYGrados`, { headers }),
+                fetch(`${API_BASE_URL}/api/perfilDocente`, { headers }).catch(() => ({ ok: false }))
             ])
-
-            // 🔍 Diagnóstico en la consola del navegador (Presiona F12)
-            console.log("Status /api/grado:", resGrados.status);
-            console.log("Status /api/secciones:", resSecciones.status);
-
-            if (!resGrados.ok) {
-                const text = await resGrados.text();
-                console.error("Respuesta fallida en Grados:", text);
-            }
-            if (!resSecciones.ok) {
-                const text = await resSecciones.text();
-                console.error("Respuesta fallida en Secciones:", text);
-            }
 
             if (!resGrados.ok || !resSecciones.ok) {
                 throw new Error(`Error HTTP: Grados [${resGrados.status}], Secciones [${resSecciones.status}]`)
@@ -54,23 +43,30 @@ function GradosView() {
             const grados = await resGrados.json()
             const seccionesList = await resSecciones.json()
             let docentes = []
+
             if (resDocentes.ok) {
                 docentes = await resDocentes.json()
             }
 
-            setGradosListRaw(grados)
-            setDocentesList(docentes)
+            // Diagnóstico en consola para confirmar los 8 campos
+            if (seccionesList && seccionesList.length > 0) {
+                console.log("Estructura devuelta por SeccionesYGrados:", seccionesList[0]);
+            }
 
-            // Vincular secciones a su respectivo grado
-            const gradosConSecciones = grados.map(grado => ({
+            setGradosListRaw(grados || [])
+            setDocentesList(docentes || [])
+
+            // Vinculación por gradoId
+            const gradosConSecciones = (grados || []).map(grado => ({
                 ...grado,
-                secciones: seccionesList.filter(sec => sec.gradoId === grado.id)
+                secciones: (seccionesList || []).filter(sec => Number(sec.gradoId) === Number(grado.id))
             }))
 
             setGradosData(gradosConSecciones)
+
         } catch (err) {
             console.error("Error general en fetchData:", err)
-            setError(err.message)
+            setError(err.message || 'Error al conectar con el servidor')
         } finally {
             setLoading(false)
         }
@@ -108,7 +104,6 @@ function GradosView() {
                 throw new Error('Error al registrar la sección')
             }
 
-            // Cerrar modal, limpiar formulario y recargar datos de forma dinámica
             setShowModal(false)
             setFormData({ gradoId: '', nombre: '', cupoMaximo: 30, docenteId: '' })
             await fetchData()
@@ -129,13 +124,11 @@ function GradosView() {
                     <h2>📚 Grados y Secciones Académicas</h2>
                     <p>Distribución de secciones y docentes asignados por grado</p>
                 </div>
-                {/* ➕ Abre el modal para crear la sección */}
                 <button className="btn-nuevo-grado" onClick={() => setShowModal(true)}>
                     ➕ Asignar Grado / Sección
                 </button>
             </div>
 
-            {/* MODAL PARA CREAR NUEVA SECCIÓN */}
             {showModal && (
                 <div className="modal-overlay">
                     <div className="modal-content">
@@ -230,14 +223,18 @@ function GradosView() {
                                     <div key={sec.id} className="seccion-item">
                                         <div className="seccion-badge-info">
                                             <span className="badge-seccion">Sección {sec.nombre}</span>
-                                            <span className="alumnos-count">👥 {sec.estudiantesCount || 0} alumnos</span>
+                                            <span className="alumnos-count">
+                                                👥 {sec.estudiantesCount !== undefined ? sec.estudiantesCount : 0} alumnos
+                                            </span>
                                         </div>
 
                                         <div className="profesor-asignado-box">
                                             <small>Profesor encargado:</small>
-                                            <p className="profesor-nombre">👨‍🏫 {sec.nombreDocente || 'Sin asignar'}</p>
-                                            <span className={`estado-prof ${sec.nombreDocente ? 'activo' : 'pendiente'}`}>
-                                                ● {sec.nombreDocente ? 'Activo' : 'Pendiente'}
+                                            <p className="profesor-nombre">
+                                                👨‍🏫 {sec.nombreDocente && sec.nombreDocente.trim() !== '' ? sec.nombreDocente : 'Sin asignar'}
+                                            </p>
+                                            <span className={`estado-prof ${sec.nombreDocente && sec.nombreDocente.trim() !== '' ? 'activo' : 'pendiente'}`}>
+                                                ● {sec.nombreDocente && sec.nombreDocente.trim() !== '' ? 'Activo' : 'Pendiente'}
                                             </span>
                                         </div>
                                     </div>

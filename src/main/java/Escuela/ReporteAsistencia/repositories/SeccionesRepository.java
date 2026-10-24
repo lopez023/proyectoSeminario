@@ -1,6 +1,7 @@
 package Escuela.ReporteAsistencia.repositories;
 
 import Escuela.ReporteAsistencia.dtos.asistenciaDTO.EstudianteResumenDTO;
+import Escuela.ReporteAsistencia.dtos.asistenciaDTO.SeccionesDTO;
 import Escuela.ReporteAsistencia.interfaceModels.SeccionProjection;
 import Escuela.ReporteAsistencia.models.Secciones;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -46,5 +47,26 @@ public interface SeccionesRepository extends JpaRepository<Secciones, Long> {
         ORDER BY e.primerApellido ASC, e.nombre ASC
     """)
     List<EstudianteResumenDTO> obtenerEstudiantesConUltimaAsistencia(@Param("docenteId") Long docenteId);
+
+
+    @Query("""
+        SELECT new Escuela.ReporteAsistencia.dtos.asistenciaDTO.SeccionesDTO(
+            s.id,
+            s.nombre,
+            s.cupoMaximo,
+            g.id,
+            g.nombreGrado,
+            d.id,
+            CONCAT(d.nombre, ' ', COALESCE(d.primerApellido, '')),
+            COUNT(e.id)
+        )
+        FROM Secciones s
+        JOIN s.grado g
+        LEFT JOIN s.docente d
+        LEFT JOIN s.estudiantes e
+        GROUP BY s.id, s.nombre, s.cupoMaximo, g.id, g.nombreGrado, d.id, d.nombre, d.primerApellido
+        ORDER BY g.id ASC, s.nombre ASC
+    """)
+    List<SeccionesDTO> obtenerSeccionesConConteoEstudiantes();
 
 }

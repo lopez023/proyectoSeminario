@@ -48,13 +48,12 @@ function MainLayout({ onLogout }) {
                     >
                         📚 Grados y Secciones
                     </button>
-                    <button
-                        className={`nav-link-btn ${currentView === 'horarios' ? 'active' : ''}`}
-                        onClick={() => setCurrentView('horarios')}
-                    >
-                        ⏰ Horarios
-                    </button>
-
+                    {/* <button
+    className={`nav-link-btn ${currentView === 'horarios' ? 'active' : ''}`}
+    onClick={() => setCurrentView('horarios')}
+>
+    ⏰ Horarios
+</button> */}
                     <p className="nav-section-title">ASISTENCIA</p>
 
                     <button
