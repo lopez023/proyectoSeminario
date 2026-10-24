@@ -172,11 +172,42 @@ public class AsistenciaService {
     // =====================================================
     // 6. LISTAR ASISTENCIAS DE UNA FECHA (DTO simple)
     // =====================================================
-    public List<AsistenciaResponseDTO> listarPorFecha(LocalDate fecha) {
+ /*   public List<AsistenciaResponseDTO> listarPorFecha(LocalDate fecha) {
         return asistenciaRepository.findByFechaOrderByEstudiante_PrimerApellidoAsc(fecha)
                 .stream()
                 .map(this::toDTO)
                 .toList();
+    }*/
+
+
+
+
+    public List<AsistenciaResponseDTO> listarPorFecha(LocalDate fecha) {
+        // 1. Intentar obtener asistencias ya tomadas en esa fecha
+        List<Asistencias> asistenciasGuardadas = asistenciaRepository.findByFechaOrderByEstudiante_PrimerApellidoAsc(fecha);
+
+        // 2. Si ya se tomó asistencia ese día, retornamos esas asistencias
+        if (!asistenciasGuardadas.isEmpty()) {
+            return asistenciasGuardadas.stream()
+                    .map(this::toDTO)
+                    .toList();
+        }
+
+        // 3. Si NO se ha tomado asistencia, traemos los estudiantes para permitir registrarla
+        List<Estudiantes> estudiantes = estudianteRepository.findAll(); // O utiliza tu método de ordenamiento
+
+        return estudiantes.stream().map(estudiante -> {
+            AsistenciaResponseDTO dto = new AsistenciaResponseDTO();
+            dto.setId(null); // Registro nuevo
+            dto.setEstudianteId(estudiante.getId());
+            dto.setNombreEstudiante(estudiante.getNombre() + " " + estudiante.getPrimerApellido());
+            dto.setMatricula(estudiante.getCodigoEstudiante());
+            dto.setFecha(fecha);
+            dto.setEstado(null); // En React se mapeará como SIN_REGISTRAR
+            dto.setHora("-");
+            dto.setObservacion("");
+            return dto;
+        }).toList();
     }
 
     // =====================================================

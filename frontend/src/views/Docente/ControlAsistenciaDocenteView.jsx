@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import './ControlAsistenciaDocenteView.css';
 
-const API_URL = 'http://localhost:8080/api/asistencias';
+import { API_BASE_URL } from "../../config.jsx";
 
 const ESTADOS_UI = {
     PRESENTE: 'Presente',
@@ -25,7 +25,6 @@ function obtenerFechaLocal() {
 }
 
 function obtenerToken() {
-    // Ajusta esta clave si tu login guarda el JWT con otro nombre.
     return localStorage.getItem('jwt_token');
 }
 
@@ -54,7 +53,7 @@ export default function ControlAsistenciaDocenteView({ onVolver }) {
             }
 
             const respuesta = await fetch(
-                `${API_URL}/lista?fecha=${encodeURIComponent(fecha)}`,
+                `${API_BASE_URL}/api/asistencias/lista/${encodeURIComponent(fecha)}`,
                 {
                     method: 'GET',
                     headers: {
@@ -72,22 +71,36 @@ export default function ControlAsistenciaDocenteView({ onVolver }) {
             }
 
             const datos = await respuesta.json();
-            setGrado(datos.grado ?? '');
-            setSeccion(datos.seccion ?? '');
-            setGradoId(datos.gradoId ?? null);
-            setSeccionId(datos.seccionId ?? null);
 
-            setAlumnos((datos.alumnos ?? []).map((alumno) => {
-                const estadoApi = String(alumno.estado ?? 'SIN_REGISTRAR').toUpperCase();
+            const esListaDirecta = Array.isArray(datos);
+            const listaOriginal = esListaDirecta ? datos : (datos?.alumnos ?? []);
+
+            setGrado(esListaDirecta ? '' : (datos?.grado ?? ''));
+            setSeccion(esListaDirecta ? '' : (datos?.seccion ?? ''));
+            setGradoId(esListaDirecta ? null : (datos?.gradoId ?? null));
+            setSeccionId(esListaDirecta ? null : (datos?.seccionId ?? null));
+
+            // Mapeo seguro con valores por defecto garantizados
+            const alumnosFormateados = listaOriginal.map((item, index) => {
+                const estadoApi = String(item?.estado ?? 'SIN_REGISTRAR').toUpperCase();
+                const idAlumno = item?.estudianteId ?? item?.id ?? (index + 1);
+                const nombreAlumno = item?.nombreEstudiante
+                    || item?.nombre
+                    || `${item?.estudianteNombre || ''} ${item?.estudianteApellido || ''}`.trim()
+                    || `Estudiante ${idAlumno}`;
+
                 return {
-                    id: alumno.id,
-                    nombre: alumno.nombre,
-                    estado: ESTADOS_UI[estadoApi] ?? 'SIN_REGISTRAR',
-                    hora: alumno.hora ?? '-',
-                    observacion: alumno.observacion === '-' ? '' : (alumno.observacion ?? ''),
+                    id: idAlumno,
+                    nombre: nombreAlumno,
+                    estado: ESTADOS_UI[estadoApi] || 'SIN_REGISTRAR',
+                    hora: item?.hora && item?.hora !== '-' ? item.hora : '-',
+                    observacion: item?.observacion ?? item?.comentario ?? '',
                     estadoOriginal: estadoApi,
                 };
-            }));
+            });
+
+            setAlumnos(alumnosFormateados);
+
         } catch (e) {
             setAlumnos([]);
             setGrado('');
@@ -131,8 +144,8 @@ export default function ControlAsistenciaDocenteView({ onVolver }) {
     const alumnosFiltrados = useMemo(() => {
         const termino = busqueda.trim().toLowerCase();
         return alumnos.filter((alumno) =>
-            alumno.nombre.toLowerCase().includes(termino) ||
-            String(alumno.id).includes(termino)
+            (alumno.nombre || '').toLowerCase().includes(termino) ||
+            String(alumno.id || '').includes(termino)
         );
     }, [alumnos, busqueda]);
 
@@ -162,17 +175,16 @@ export default function ControlAsistenciaDocenteView({ onVolver }) {
             const token = obtenerToken();
             if (!token) throw new Error('No se encontró el token de sesión. Inicia sesión nuevamente.');
 
-            // Coincide con RegistroAsistenciaDTO: fecha y detalles.
             const registro = {
                 fecha,
                 detalles: alumnos.map((alumno) => ({
                     estudianteId: alumno.id,
                     estado: ESTADOS_API[alumno.estado],
-                    observacion: alumno.observacion.trim(),
+                    observacion: (alumno.observacion || '').trim(),
                 })),
             };
 
-            const respuesta = await fetch(`${API_URL}/registrar`, {
+            const respuesta = await fetch(`${API_BASE_URL}/api/asistencias/registrar`, {
                 method: 'POST',
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -231,7 +243,7 @@ export default function ControlAsistenciaDocenteView({ onVolver }) {
                 <article className="summary-card">
                     <div className="summary-icon icon-total">#</div>
                     <div className="summary-info">
-                        <span>Total de alumnos</span>
+                        <span>Total alumnos</span>
                         <strong>{alumnos.length}</strong>
                     </div>
                 </article>
@@ -334,42 +346,45 @@ export default function ControlAsistenciaDocenteView({ onVolver }) {
                             </tr>
                             </thead>
                             <tbody>
-                            {alumnosFiltrados.map((alumno, index) => (
-                                <tr key={alumno.id}>
-                                    <td className="number-cell">{String(index + 1).padStart(2, '0')}</td>
-                                    <td>
-                                        <span className="student-id">{String(alumno.id).padStart(2, '0')}</span>
-                                    </td>
-                                    <td className="student-name">{alumno.nombre}</td>
-                                    <td>
-                                        <div className={`status-control status-${alumno.estado.toLowerCase()}`}>
-                                            <span className="status-dot" />
-                                            <select
-                                                aria-label={`Estado de ${alumno.nombre}`}
-                                                value={alumno.estado}
-                                                onChange={(e) => handleEstadoChange(alumno.id, e.target.value)}
-                                            >
-                                                <option value="SIN_REGISTRAR">Sin registrar</option>
-                                                <option value="Presente">Presente</option>
-                                                <option value="Ausente">Ausente</option>
-                                                <option value="Tarde">Tarde</option>
-                                                <option value="Justificado">Justificado</option>
-                                            </select>
-                                        </div>
-                                    </td>
-                                    <td className="student-time">{alumno.hora}</td>
-                                    <td>
-                                        <input
-                                            className="observation-input"
-                                            type="text"
-                                            aria-label={`Observación de ${alumno.nombre}`}
-                                            value={alumno.observacion}
-                                            onChange={(e) => handleObservacionChange(alumno.id, e.target.value)}
-                                            placeholder="Escribir observación..."
-                                        />
-                                    </td>
-                                </tr>
-                            ))}
+                            {alumnosFiltrados.map((alumno, index) => {
+                                const estadoClase = (alumno.estado || 'SIN_REGISTRAR').toLowerCase();
+                                return (
+                                    <tr key={alumno.id ?? index}>
+                                        <td className="number-cell">{String(index + 1).padStart(2, '0')}</td>
+                                        <td>
+                                            <span className="student-id">{String(alumno.id ?? '-').padStart(2, '0')}</span>
+                                        </td>
+                                        <td className="student-name">{alumno.nombre || 'Sin Nombre'}</td>
+                                        <td>
+                                            <div className={`status-control status-${estadoClase}`}>
+                                                <span className="status-dot" />
+                                                <select
+                                                    aria-label={`Estado de ${alumno.nombre}`}
+                                                    value={alumno.estado || 'SIN_REGISTRAR'}
+                                                    onChange={(e) => handleEstadoChange(alumno.id, e.target.value)}
+                                                >
+                                                    <option value="SIN_REGISTRAR">Sin registrar</option>
+                                                    <option value="Presente">Presente</option>
+                                                    <option value="Ausente">Ausente</option>
+                                                    <option value="Tarde">Tarde</option>
+                                                    <option value="Justificado">Justificado</option>
+                                                </select>
+                                            </div>
+                                        </td>
+                                        <td className="student-time">{alumno.hora || '-'}</td>
+                                        <td>
+                                            <input
+                                                className="observation-input"
+                                                type="text"
+                                                aria-label={`Observación de ${alumno.nombre}`}
+                                                value={alumno.observacion || ''}
+                                                onChange={(e) => handleObservacionChange(alumno.id, e.target.value)}
+                                                placeholder="Escribir observación..."
+                                            />
+                                        </td>
+                                    </tr>
+                                );
+                            })}
                             {alumnosFiltrados.length === 0 && (
                                 <tr>
                                     <td colSpan={6} className="no-results">
