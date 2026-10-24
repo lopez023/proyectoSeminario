@@ -42,25 +42,23 @@ public interface AsistenciaRepository extends JpaRepository<Asistencias,Long> {
 
 
     long countByFechaAndEstado(LocalDate fecha, EstadoAsistencias estado);
-
     @Query("""
-    SELECT new Escuela.ReporteAsistencia.dtos.asistenciaDTO.UltimaAsistenciaDTO(
-        a.id,
-        CONCAT(e.nombre, ' ', e.primerApellido),
-        g.nombreGrado,
-        s.nombre,
-        a.estado,
-        a.hora
-    )
-    FROM Asistencias a
-    JOIN a.estudiante e
-    JOIN e.seccion s
-    JOIN s.grado g
-    WHERE a.fecha = :fecha
-    ORDER BY a.hora DESC, a.id DESC
-    LIMIT 5
-""")
+        SELECT new Escuela.ReporteAsistencia.dtos.asistenciaDTO.UltimaAsistenciaDTO(
+            a.id,
+            CONCAT(e.nombre, ' ', COALESCE(e.primerApellido, '')),
+            g.nombreGrado,
+            s.nombre,
+            a.estado,
+            a.hora
+        )
+        FROM Asistencias a
+        JOIN a.estudiante e
+        JOIN e.seccion s
+        JOIN s.grado g
+        WHERE a.fecha = :fecha
+        ORDER BY a.hora DESC, a.id DESC
+        LIMIT 5
+    """)
     List<UltimaAsistenciaDTO> obtenerUltimasAsistenciasDelDia(@Param("fecha") LocalDate fecha);
-
 }
 

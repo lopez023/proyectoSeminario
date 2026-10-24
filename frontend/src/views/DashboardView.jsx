@@ -78,7 +78,7 @@ function DashboardView({ onNavigate }) {
                     <span className="metric-icon">👥</span>
                     <div>
                         <h2>{loading ? '...' : dashboardData.totalAlumnos}</h2>
-                        <p>Total de alumnos</p>
+                        <p>Total alumnos</p>
                     </div>
                 </div>
 

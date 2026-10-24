@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.awt.print.Pageable;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.List;
 
 @RestController
@@ -112,7 +113,7 @@ public class AsistenciaController {
 
     @GetMapping("/resumen")
     public ResponseEntity<DashboardResumenDTO> obtenerResumenDashboard() {
-        LocalDate hoy = LocalDate.now();
+        LocalDate hoy = LocalDate.now(ZoneId.of("America/Guatemala"));
 
         long totalAlumnos = estudiantesRepository.count();
         long presentes = asistenciasRepository.countByFechaAndEstado(hoy, EstadoAsistencias.PRESENTE);
