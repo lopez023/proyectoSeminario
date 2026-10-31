@@ -33,7 +33,6 @@ public class JwtService {
 
     public String generarToken(UserDetails userDetails) {
 
-        // 1. Extraemos los roles/autoridades directamente del usuario
         List<String> roles = userDetails.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toList());
